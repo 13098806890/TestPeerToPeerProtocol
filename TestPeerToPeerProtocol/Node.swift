@@ -26,16 +26,17 @@ protocol NearFieldPeerToPeerNode {
 
 protocol NearFieldPeerToPeerTransportProtocol: NearFieldPeerToPeerNode {
     var isMainNode: Bool {get}
-    var address: Int64 {get}
-    var usedAddresses: [Int64] {get}
-    var nodesInfo: [Int64: NearFieldPeerToPeerNode] {get}
-    var leafSize: Int64 {get}
+    var address: UInt32 {get}
+    var usedAddresses: [UInt32] {get}
+    var nodesInfo: [UInt32: NearFieldPeerToPeerNode] {get}
+    var leafSize: UInt32 {get}
 
+    func calculateNextAddress() -> UInt32
     func receiveInvitation(from node: NearFieldPeerToPeerNode)
     func sendTransportData(data transportData: MultipeerTransportData, toPeers targetPeer: [NearFieldPeerToPeerNode]) -> Bool
     func handle(data transportData: MultipeerTransportData)
     func path(from node: NearFieldPeerToPeerNode, to target:NearFieldPeerToPeerNode) -> [NearFieldPeerToPeerNode]
-    func updateNodeInfo()
+    func updateNodesInfo()
     
 }
 
@@ -45,15 +46,15 @@ class TestNode: TreeProtocol {
 
 class TreeProtocol: NearFieldPeerToPeerTransportProtocol {
 
-    var usedAddresses: <Int64> = [0]
+    var usedAddresses: [UInt32] = [0]
 
     var isMainNode: Bool = true
 
-    var address: Int64 = 0
+    var address: UInt32 = 0
 
-    var nodesInfo: [Int64 : NearFieldPeerToPeerNode] = [:]
+    var nodesInfo: [UInt32 : NearFieldPeerToPeerNode] = [:]
 
-    var leafSize: Int64 = 2
+    var leafSize: UInt32 = 2
 
     var connectedNodes: [NearFieldPeerToPeerNode] = [NearFieldPeerToPeerNode]()
 
@@ -75,6 +76,23 @@ class TreeProtocol: NearFieldPeerToPeerTransportProtocol {
     }
 
     //TransportProtocol
+    func calculateNextAddress() -> UInt32 {
+        if usedAddresses.count == 1 {
+            return 1
+        } else {
+            var start = 0, end = usedAddresses.count
+            while start != end && start != end - 1 {
+                let mid = (start + end) / 2
+                if usedAddresses[mid] != mid {
+                    end = mid
+                } else {
+                    start = mid
+                }
+            }
+            return UInt32(end)
+        }
+    }
+
     func sendInvitation(to node: NearFieldPeerToPeerNode) {
         node.receiveInvitation(from: self)
     }
@@ -122,7 +140,7 @@ class TreeProtocol: NearFieldPeerToPeerTransportProtocol {
 
     }
 
-    func updateNodeInfo() {
+    func updateNodesInfo() {
 
     }
 

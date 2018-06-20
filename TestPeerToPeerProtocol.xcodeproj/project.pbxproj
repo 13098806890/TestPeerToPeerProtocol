@@ -21,6 +21,7 @@
 /* Begin PBXFileReference section */
 		DA34298A20DA416B00B16EFB /* MultipeerDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerDataParser.swift; sourceTree = "<group>"; };
 		DA34298C20DA52C300B16EFB /* NuclearTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NuclearTest.swift; sourceTree = "<group>"; };
+		DA40C4C720DA5D8C0058054C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DA5C49AF20D9EF3700B74639 /* TestPeerToPeerProtocol.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestPeerToPeerProtocol.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5C49B220D9EF3700B74639 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA5C49B420D9EF3700B74639 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -43,11 +44,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA40C4C620DA5D8C0058054C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DA40C4C720DA5D8C0058054C /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DA5C49A620D9EF3700B74639 = {
 			isa = PBXGroup;
 			children = (
 				DA5C49B120D9EF3700B74639 /* TestPeerToPeerProtocol */,
 				DA5C49B020D9EF3700B74639 /* Products */,
+				DA40C4C620DA5D8C0058054C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

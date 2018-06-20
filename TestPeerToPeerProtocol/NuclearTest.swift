@@ -10,5 +10,4 @@ import Foundation
 
 class NuclearTest {
     static let labs = NuclearTest()
-    let 
 }

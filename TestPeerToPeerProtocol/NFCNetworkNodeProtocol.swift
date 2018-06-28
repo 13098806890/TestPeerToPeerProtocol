@@ -32,3 +32,7 @@ protocol NFCNetworkNodeProtocol {
     func send(_ data: NSCoding, toUsers users: [User])
 
 }
+
+protocol NFCNetworkNodeProtocolForTest: NFCNetworkNodeProtocol{
+    func addBlinds(_ blinds: [String]) -> Void
+}

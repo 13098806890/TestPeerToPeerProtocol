@@ -10,4 +10,6 @@ import Foundation
 
 class NuclearTest {
     static let labs = NuclearTest()
+    var networkNodes: [NetworkIdentifier:[NFCNetworkNodeProtocolForTest]] = [NetworkIdentifier:[NFCNetworkNodeProtocolForTest]]()
+    let allNodes: [NFCNetworkNodeProtocolForTest] = [NFCNetworkNodeProtocolForTest]()
 }

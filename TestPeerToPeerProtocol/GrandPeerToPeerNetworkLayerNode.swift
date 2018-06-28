@@ -1,26 +1,21 @@
 //
-//  Node.swift
+//  GrandPeerToPeerNetworkLayerNode.swift
 //  TestPeerToPeerProtocol
 //
-//  Created by doxie on 6/20/18.
+//  Created by doxie on 6/28/18.
 //  Copyright © 2018 Xie. All rights reserved.
 //
 
 import Foundation
 
+class GrandPeerToPeerNetworkLayerNode: PeerToPeerNetworkProtocol {
+    //MARK: Properties
 
-class Node: NFCNetworkNodeProtocol {
-
-    var peerID: Any = ""
-
-    var browsers: [NetworkIdentifier : Any] = [NetworkIdentifier : Any]()
-
-    var advertisers: [NetworkIdentifier : Any] = [NetworkIdentifier : Any]()
-
-    var sessions: [NetworkIdentifier : Any] = [NetworkIdentifier : Any]()
-
-    var networks: [NetworkIdentifier : Network] = [NetworkIdentifier : Network]()
     
+    //MARK : PeerToPeerNetworkProtocol methods
+    func createNetwork(_ networkIdentifier: NetworkIdentifier) {
+
+    }
 
     func advertise(_ networkIdentifier: NetworkIdentifier) {
 
@@ -54,11 +49,24 @@ class Node: NFCNetworkNodeProtocol {
         return true
     }
 
-    func send(_ data: NSCoding, toUsers users: [User]) {
+    func disconnectWithUser(_ user: User, in netWork: Network) {
 
     }
 
+    func quit(_ network: Network) {
 
+    }
 
+    func disbandNetwork(_ network: Network) {
+
+    }
+
+    func kickOffUser(_ user: User, fromNetwork network: Network) {
+
+    }
+
+    func sendData(data: NSCoding, toUser user: User, inNetwork network: Network) -> Bool {
+        return true
+    }
 
 }

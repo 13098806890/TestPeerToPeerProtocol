@@ -40,12 +40,12 @@ class MultipeerData: NSObject, NSCoding {
 class MultipeerTransportData: NSObject, NSCoding {
 
     var needForward: Bool = false
-    var forwardList: [MultipeerNetWorkPeerToPeerNode]?
-    var sender: MultipeerNetWorkPeerToPeerNode!
+    var forwardList: [Any]?
+    var sender: Any!
     var data: MultipeerData
     var isUpdateNodesInfo: Bool = false
 
-    init(data: MultipeerData, sender: MultipeerNetWorkPeerToPeerNode) {
+    init(data: MultipeerData, sender: Any) {
         self.data = data
         self.sender = sender
     }
@@ -60,8 +60,8 @@ class MultipeerTransportData: NSObject, NSCoding {
 
     required init?(coder aDecoder: NSCoder) {
         self.needForward = aDecoder.decodeBool(forKey: "needForward")
-        self.forwardList = aDecoder.decodeObject(forKey: "forwardList") as? [MultipeerNetWorkPeerToPeerNode]
-        self.sender = aDecoder.decodeObject(forKey: "sender") as! MultipeerNetWorkPeerToPeerNode
+        self.forwardList = aDecoder.decodeObject(forKey: "forwardList") as? [Any]
+        self.sender = aDecoder.decodeObject(forKey: "sender") as! Any
         self.data = aDecoder.decodeObject(forKey: "data") as! MultipeerData
         self.isUpdateNodesInfo = aDecoder.decodeBool(forKey: "isUpdateGroupInfo")
     }

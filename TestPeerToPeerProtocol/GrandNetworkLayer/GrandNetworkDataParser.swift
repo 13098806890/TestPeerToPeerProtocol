@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MultipeerConnectivity
 
 public enum MultipeerDataType: String {
 
@@ -16,7 +15,7 @@ public enum MultipeerDataType: String {
     case message
 }
 
-class MultipeerData: NSObject, NSCoding {
+class GrandNetworkData: NSObject, NSCoding {
 
     var dataType: MultipeerDataType
     var data: NSCoding?
@@ -37,15 +36,15 @@ class MultipeerData: NSObject, NSCoding {
     }
 }
 
-class MultipeerTransportData: NSObject, NSCoding {
+class GrandNetworkTransportData: NSObject, NSCoding {
 
     var needForward: Bool = false
     var forwardList: [Any]?
     var sender: Any!
-    var data: MultipeerData
+    var data: GrandNetworkData
     var isUpdateNodesInfo: Bool = false
 
-    init(data: MultipeerData, sender: Any) {
+    init(data: GrandNetworkData, sender: Any) {
         self.data = data
         self.sender = sender
     }

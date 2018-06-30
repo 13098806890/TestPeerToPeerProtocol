@@ -7,13 +7,14 @@
 //
 
 typealias User = Any
-typealias Network = Any
-typealias NetworkIdentifier = String
+typealias Network = AnyHashable
+typealias NetworkIdentifier = AnyHashable
+typealias NFCNodeIdentifier = AnyHashable
 
 import Foundation
 protocol NFCNetworkNodeProtocol {
     
-    var peerID: Any {get}
+    var peerID: NFCNodeIdentifier {get}
     var browsers: [NetworkIdentifier:Any] {get}
     var advertisers: [NetworkIdentifier:Any] {get}
     var sessions: [NetworkIdentifier: Any] {get}

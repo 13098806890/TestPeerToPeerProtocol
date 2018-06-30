@@ -11,8 +11,6 @@ import Foundation
 
 class Node: NFCNetworkNodeProtocolForTest {
 
-
-
     //MARK: for testing
 
     let playGround = NuclearTest.labs
@@ -32,7 +30,7 @@ class Node: NFCNetworkNodeProtocolForTest {
     }
 
     //MARK: NFCNetworkNodeProtocol methods
-    var peerID: Any
+    var peerID: NFCNodeIdentifier
 
     var browsers: [NetworkIdentifier : Any] = [NetworkIdentifier : Any]()
 

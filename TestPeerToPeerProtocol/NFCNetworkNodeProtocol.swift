@@ -30,10 +30,12 @@ protocol NFCNetworkNodeProtocol {
     func invite(_ user: User, to netWork: Network) -> Void
     func invitedBy(_ user: User, from netWork: Network) -> Bool
 
-    func send(_ data: NSCoding, toUsers users: [User])
+    func send(_ data: NSData, toUsers users: [User])
 
 }
 
 protocol NFCNetworkNodeProtocolForTest: NFCNetworkNodeProtocol{
     func addBlinds(_ blinds: [String]) -> Void
+    func send(_ data: NSData, toNode nodes: [NFCNetworkNodeProtocolForTest])
+    func receive(_ data: NSData, from node: NFCNetworkNodeProtocolForTest)
 }

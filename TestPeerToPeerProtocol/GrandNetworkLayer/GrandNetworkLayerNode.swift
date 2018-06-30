@@ -38,7 +38,7 @@ class GrandNetworkLayerNode: PeerToPeerNetworkProtocol {
     
     //MARK : PeerToPeerNetworkProtocol methods
     func createNetwork(_ networkIdentifier: NetworkIdentifier) {
-
+        
     }
 
     func advertise(_ networkIdentifier: NetworkIdentifier) {

@@ -59,11 +59,11 @@
 		651916A420E7BA3900F3B033 /* GrandNetworkLayer */ = {
 			isa = PBXGroup;
 			children = (
-				DA34298A20DA416B00B16EFB /* GrandNetworkDataParser.swift */,
 				DACE0D5620E4BA8400AB97B2 /* GrandNetworkLayerNode.swift */,
 				6519169E20E787B000F3B033 /* GNLDataStructure.swift */,
 				651916A020E7926600F3B033 /* GNLDomainUsersInfo.swift */,
 				651916A220E7979400F3B033 /* GNLNetworkInfo.swift */,
+				DA34298A20DA416B00B16EFB /* GrandNetworkDataParser.swift */,
 			);
 			path = GrandNetworkLayer;
 			sourceTree = "<group>";

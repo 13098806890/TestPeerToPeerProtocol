@@ -10,6 +10,8 @@ import Foundation
 
 
 class Node: NFCNetworkNodeProtocolForTest {
+    
+
 
     //MARK: for testing
 
@@ -18,6 +20,17 @@ class Node: NFCNetworkNodeProtocolForTest {
     func addBlinds(_ blinds: [String]) {
         self.unableToBeFoundPeers += blinds
     }
+    
+    func send(_ data: NSData, toNode nodes: [NFCNetworkNodeProtocolForTest]) {
+        for node in nodes {
+            node.receive(data, from: self)
+        }
+    }
+    
+    func receive(_ data: NSData, from node: NFCNetworkNodeProtocolForTest) {
+        
+    }
+    
     //MARK: init methods
 
     init(name: String, blinds: [String]) {
@@ -89,8 +102,7 @@ class Node: NFCNetworkNodeProtocolForTest {
         return true
     }
 
-    func send(_ data: NSCoding, toUsers users: [User]) {
-
+    func send(_ data: NSData, toUsers users: [User]) {
     }
 
 

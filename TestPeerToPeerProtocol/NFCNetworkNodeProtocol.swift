@@ -6,31 +6,33 @@
 //  Copyright © 2018 Xie. All rights reserved.
 //
 
-typealias User = Any
-typealias Network = AnyHashable
-typealias NetworkIdentifier = AnyHashable
-typealias NFCNodeIdentifier = AnyHashable
+typealias NetworkIdentifier = String
+typealias User = String
+typealias Network = NetworkIdentifier
+typealias NFCNodeIdentifier = NetworkIdentifier
 
 import Foundation
 protocol NFCNetworkNodeProtocol {
     
     var peerID: NFCNodeIdentifier {get}
-    var browsers: [NetworkIdentifier:Any] {get}
-    var advertisers: [NetworkIdentifier:Any] {get}
-    var sessions: [NetworkIdentifier: Any] {get}
+    var browsers: [NetworkIdentifier:Int] {get}
+    var advertisers: [NetworkIdentifier:Int] {get}
+    var sessions: [NetworkIdentifier: Int] {get}
     var networks: [NetworkIdentifier: Network] {get}
+    var connectedUsers: [NFCNetworkNodeProtocolForTest] {set get}
+    var invitationHandler: ((Bool) -> Void)!
 
+    func createNetwork(_ networkIdentifier: NetworkIdentifier) -> Void
     func advertise(_ networkIdentifier: NetworkIdentifier) -> Void
     func stopAdvertise(_ networkIdentifier: NetworkIdentifier) -> Void
     func browse(_ networkIdentifier: NetworkIdentifier) -> Void
     func stopBrowse(_ networkIdentifier: NetworkIdentifier) -> Void
 
-    func foundPeers() -> [User]
-    func connectedUsers() -> [User]
-    func invite(_ user: User, to netWork: Network) -> Void
-    func invitedBy(_ user: User, from netWork: Network) -> Bool
+    func foundPeers() -> [NFCNetworkNodeProtocolForTest]
+    func invite(_ user: NFCNetworkNodeProtocolForTest, to netWork: Network) -> Void
+    func invitedBy(_ user: NFCNetworkNodeProtocolForTest, from netWork: Network) -> Bool
 
-    func send(_ data: NSData, toUsers users: [User])
+    func send(_ data: NSData, toUsers users: [NFCNetworkNodeProtocolForTest])
 
 }
 

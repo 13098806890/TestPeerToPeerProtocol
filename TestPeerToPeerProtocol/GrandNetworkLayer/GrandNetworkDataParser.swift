@@ -61,7 +61,7 @@ class GrandNetworkTransportData: NSObject, NSCoding {
         self.needForward = aDecoder.decodeBool(forKey: "needForward")
         self.forwardList = aDecoder.decodeObject(forKey: "forwardList") as? [Any]
         self.sender = aDecoder.decodeObject(forKey: "sender") as! Any
-        self.data = aDecoder.decodeObject(forKey: "data") as! MultipeerData
+        self.data = aDecoder.decodeObject(forKey: "data") as! GrandNetworkData
         self.isUpdateNodesInfo = aDecoder.decodeBool(forKey: "isUpdateGroupInfo")
     }
 

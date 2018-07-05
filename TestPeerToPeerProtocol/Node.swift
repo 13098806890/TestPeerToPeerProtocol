@@ -10,7 +10,6 @@ import Foundation
 
 
 class Node: NFCNetworkNodeProtocolForTest {
-    
 
 
     //MARK: for testing
@@ -54,6 +53,8 @@ class Node: NFCNetworkNodeProtocolForTest {
     var networks: [NetworkIdentifier : Network] = [NetworkIdentifier : Network]()
     
     var connectedUsers: [NFCNetworkNodeProtocolForTest] = [NFCNetworkNodeProtocolForTest]()
+
+    var invitationHandler: ((Bool) -> Void)!
     
     func createNetwork(_ networkIdentifier: NetworkIdentifier) {
         playGround.networkNodes[networkIdentifier] = [NFCNetworkNodeProtocolForTest]()
@@ -112,14 +113,28 @@ class Node: NFCNetworkNodeProtocolForTest {
     }
 
     func invite(_ user: NFCNetworkNodeProtocolForTest, to netWork: Network) {
-        
+        user.invitedBy(self, from: netWork)
     }
 
-    func invitedBy(_ user: NFCNetworkNodeProtocolForTest, from netWork: Network) -> Bool {
-        return true
+    func invitedBy(_ user: NFCNetworkNodeProtocolForTest, from netWork: Network) {
+        user.invitedResult(true, from: self, in: netWork)
+        user.connectedUser(self)
+    }
+
+    func invitedResult(_ result: Bool, from node: NFCNetworkNodeProtocolForTest, in network: Network) {
+        if result {
+            self.connectedUsers.append(node)
+        }
+    }
+
+    func connectedUser(_ user: NFCNetworkNodeProtocolForTest) {
+        self.connectedUsers.append(user)
     }
 
     func send(_ data: NSData, toUsers users: [NFCNetworkNodeProtocolForTest]) {
+        for user in users {
+            user.receive(data, from: self)
+        }
     }
 
 

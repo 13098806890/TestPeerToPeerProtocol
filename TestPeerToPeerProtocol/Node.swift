@@ -11,13 +11,20 @@ import Foundation
 
 class Node: NFCNetworkNodeProtocolForTest {
 
+    
+
 
     //MARK: for testing
 
     let playGround = NuclearTest.labs
     var unableToBeFoundPeers: [String] = [String]()
+    var onlyFoundPeers: [String] = [String]()
     func addBlinds(_ blinds: [String]) {
         self.unableToBeFoundPeers += blinds
+    }
+    
+    func addFinders(_ finders: [String]) {
+        self.onlyFoundPeers += finders
     }
     
     func send(_ data: NSData, toNode nodes: [NFCNetworkNodeProtocolForTest]) {
@@ -57,21 +64,23 @@ class Node: NFCNetworkNodeProtocolForTest {
     var invitationHandler: ((Bool) -> Void)!
     
     func createNetwork(_ networkIdentifier: NetworkIdentifier) {
-        playGround.networkNodes[networkIdentifier] = [NFCNetworkNodeProtocolForTest]()
+        if playGround.networkNodes[networkIdentifier] == nil {
+            playGround.networkNodes[networkIdentifier] = [NFCNetworkNodeProtocolForTest]()
+        }
         browsers[networkIdentifier] = 0
         advertisers[networkIdentifier] = 0
     }
 
     func advertise(_ networkIdentifier: NetworkIdentifier) {
         advertisers[networkIdentifier] = 1
-        let nodes = playGround.networkNodes[networkIdentifier]
-        if let blindNodes = nodes?.filter({ (node) -> Bool in
-            return self.unableToBeFoundPeers.contains(node.peerID)
-        }) {
-            for node in blindNodes {
-                node.addBlinds([self.peerID])
-            }
-        }
+//        let nodes = playGround.networkNodes[networkIdentifier]
+//        if let blindNodes = nodes?.filter({ (node) -> Bool in
+//            return self.unableToBeFoundPeers.contains(node.peerID)
+//        }) {
+//            for node in blindNodes {
+//                node.addBlinds([self.peerID])
+//            }
+//        }
 
         playGround.networkNodes[networkIdentifier]?.append(self)
     }
@@ -100,16 +109,20 @@ class Node: NFCNetworkNodeProtocolForTest {
         var nodes = [NFCNetworkNodeProtocolForTest]()
         for key in browsers.keys {
             if browsers[key] == 1 {
-                if let playGroundNodes = playGround.networkNodes[key] {
-                    nodes += playGroundNodes
+                if let addedNode = playGround.foundPeers(node: self, network: key) {
+                    nodes += addedNode
                 }
             }
         }
-        return nodes.filter({ (node) -> Bool in
-            return !self.connectedUsers.contains(where: { (connectedNode) -> Bool in
-                return node.peerID == connectedNode.peerID
-            })
-        })
+        
+//        // remove the connected Peer and self
+//        return nodes.filter({ (node) -> Bool in
+//            return !(self.connectedUsers.contains(where: { (connectedNode) -> Bool in
+//                return node.peerID == connectedNode.peerID
+//            }) || node.peerID == self.peerID)
+//        })
+        return nodes
+        
     }
 
     func invite(_ user: NFCNetworkNodeProtocolForTest, to netWork: Network) {

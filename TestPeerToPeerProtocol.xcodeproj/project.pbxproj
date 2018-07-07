@@ -10,10 +10,12 @@
 		6519169F20E787B000F3B033 /* GNLDataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6519169E20E787B000F3B033 /* GNLDataStructure.swift */; };
 		651916A120E7926600F3B033 /* GNLDomainUsersInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651916A020E7926600F3B033 /* GNLDomainUsersInfo.swift */; };
 		651916A320E7979400F3B033 /* GNLNetworkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651916A220E7979400F3B033 /* GNLNetworkInfo.swift */; };
+		651916A720F0F30200F3B033 /* NuclearTestNodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651916A520F0F30200F3B033 /* NuclearTestNodeTableViewCell.swift */; };
+		651916A820F0F30200F3B033 /* NuclearTestNodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 651916A620F0F30200F3B033 /* NuclearTestNodeTableViewCell.xib */; };
 		DA34298B20DA416B00B16EFB /* GrandNetworkDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34298A20DA416B00B16EFB /* GrandNetworkDataParser.swift */; };
 		DA34298D20DA52C300B16EFB /* NuclearTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34298C20DA52C300B16EFB /* NuclearTest.swift */; };
 		DA5C49B320D9EF3700B74639 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C49B220D9EF3700B74639 /* AppDelegate.swift */; };
-		DA5C49B520D9EF3700B74639 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C49B420D9EF3700B74639 /* FirstViewController.swift */; };
+		DA5C49B520D9EF3700B74639 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C49B420D9EF3700B74639 /* HomeViewController.swift */; };
 		DA5C49B720D9EF3700B74639 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C49B620D9EF3700B74639 /* SecondViewController.swift */; };
 		DA5C49BA20D9EF3700B74639 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5C49B820D9EF3700B74639 /* Main.storyboard */; };
 		DA5C49BC20D9EF3800B74639 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA5C49BB20D9EF3800B74639 /* Assets.xcassets */; };
@@ -28,12 +30,14 @@
 		6519169E20E787B000F3B033 /* GNLDataStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNLDataStructure.swift; sourceTree = "<group>"; };
 		651916A020E7926600F3B033 /* GNLDomainUsersInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNLDomainUsersInfo.swift; sourceTree = "<group>"; };
 		651916A220E7979400F3B033 /* GNLNetworkInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNLNetworkInfo.swift; sourceTree = "<group>"; };
+		651916A520F0F30200F3B033 /* NuclearTestNodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NuclearTestNodeTableViewCell.swift; sourceTree = "<group>"; };
+		651916A620F0F30200F3B033 /* NuclearTestNodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NuclearTestNodeTableViewCell.xib; sourceTree = "<group>"; };
 		DA34298A20DA416B00B16EFB /* GrandNetworkDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrandNetworkDataParser.swift; sourceTree = "<group>"; };
 		DA34298C20DA52C300B16EFB /* NuclearTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NuclearTest.swift; sourceTree = "<group>"; };
 		DA40C4C720DA5D8C0058054C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DA5C49AF20D9EF3700B74639 /* TestPeerToPeerProtocol.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestPeerToPeerProtocol.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5C49B220D9EF3700B74639 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DA5C49B420D9EF3700B74639 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		DA5C49B420D9EF3700B74639 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DA5C49B620D9EF3700B74639 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		DA5C49B920D9EF3700B74639 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DA5C49BB20D9EF3800B74639 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,6 +72,15 @@
 			path = GrandNetworkLayer;
 			sourceTree = "<group>";
 		};
+		651916A920F1155300F3B033 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				651916A520F0F30200F3B033 /* NuclearTestNodeTableViewCell.swift */,
+				651916A620F0F30200F3B033 /* NuclearTestNodeTableViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		DA40C4C620DA5D8C0058054C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -96,8 +109,9 @@
 		DA5C49B120D9EF3700B74639 /* TestPeerToPeerProtocol */ = {
 			isa = PBXGroup;
 			children = (
+				651916A920F1155300F3B033 /* Views */,
 				DA5C49B220D9EF3700B74639 /* AppDelegate.swift */,
-				DA5C49B420D9EF3700B74639 /* FirstViewController.swift */,
+				DA5C49B420D9EF3700B74639 /* HomeViewController.swift */,
 				DA5C49B620D9EF3700B74639 /* SecondViewController.swift */,
 				DA5C49B820D9EF3700B74639 /* Main.storyboard */,
 				DA5C49BB20D9EF3800B74639 /* Assets.xcassets */,
@@ -170,6 +184,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				651916A820F0F30200F3B033 /* NuclearTestNodeTableViewCell.xib in Resources */,
 				DA5C49BF20D9EF3800B74639 /* LaunchScreen.storyboard in Resources */,
 				DA5C49BC20D9EF3800B74639 /* Assets.xcassets in Resources */,
 				DA5C49BA20D9EF3700B74639 /* Main.storyboard in Resources */,
@@ -190,8 +205,9 @@
 				DA5C49B320D9EF3700B74639 /* AppDelegate.swift in Sources */,
 				DACE0D5520E492B300AB97B2 /* PeerToPeerNetworkProtocol.swift in Sources */,
 				DA34298B20DA416B00B16EFB /* GrandNetworkDataParser.swift in Sources */,
-				DA5C49B520D9EF3700B74639 /* FirstViewController.swift in Sources */,
+				DA5C49B520D9EF3700B74639 /* HomeViewController.swift in Sources */,
 				DA34298D20DA52C300B16EFB /* NuclearTest.swift in Sources */,
+				651916A720F0F30200F3B033 /* NuclearTestNodeTableViewCell.swift in Sources */,
 				DACE0D5720E4BA8400AB97B2 /* GrandNetworkLayerNode.swift in Sources */,
 				651916A320E7979400F3B033 /* GNLNetworkInfo.swift in Sources */,
 				DA5C49C720D9EF5000B74639 /* Node.swift in Sources */,

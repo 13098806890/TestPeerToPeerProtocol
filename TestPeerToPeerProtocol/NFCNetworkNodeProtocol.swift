@@ -39,6 +39,8 @@ protocol NFCNetworkNodeProtocol {
 }
 
 protocol NFCNetworkNodeProtocolForTest: NFCNetworkNodeProtocol{
+    var unableToBeFoundPeers: [String] {get}
+    var onlyFoundPeers: [String] {get}
     func addBlinds(_ blinds: [String]) -> Void
     func send(_ data: NSData, toNode nodes: [NFCNetworkNodeProtocolForTest])
     func receive(_ data: NSData, from node: NFCNetworkNodeProtocolForTest)

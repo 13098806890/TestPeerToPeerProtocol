@@ -12,6 +12,8 @@
 		651916A320E7979400F3B033 /* GNLNetworkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651916A220E7979400F3B033 /* GNLNetworkInfo.swift */; };
 		651916A720F0F30200F3B033 /* NuclearTestNodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651916A520F0F30200F3B033 /* NuclearTestNodeTableViewCell.swift */; };
 		651916A820F0F30200F3B033 /* NuclearTestNodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 651916A620F0F30200F3B033 /* NuclearTestNodeTableViewCell.xib */; };
+		651916AC20F1166900F3B033 /* NuclearTestTableVieCellDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651916AA20F1166900F3B033 /* NuclearTestTableVieCellDetailViewController.swift */; };
+		651916AD20F1166900F3B033 /* NuclearTestTableVieCellDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 651916AB20F1166900F3B033 /* NuclearTestTableVieCellDetailViewController.xib */; };
 		DA34298B20DA416B00B16EFB /* GrandNetworkDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34298A20DA416B00B16EFB /* GrandNetworkDataParser.swift */; };
 		DA34298D20DA52C300B16EFB /* NuclearTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34298C20DA52C300B16EFB /* NuclearTest.swift */; };
 		DA5C49B320D9EF3700B74639 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C49B220D9EF3700B74639 /* AppDelegate.swift */; };
@@ -32,6 +34,8 @@
 		651916A220E7979400F3B033 /* GNLNetworkInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNLNetworkInfo.swift; sourceTree = "<group>"; };
 		651916A520F0F30200F3B033 /* NuclearTestNodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NuclearTestNodeTableViewCell.swift; sourceTree = "<group>"; };
 		651916A620F0F30200F3B033 /* NuclearTestNodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NuclearTestNodeTableViewCell.xib; sourceTree = "<group>"; };
+		651916AA20F1166900F3B033 /* NuclearTestTableVieCellDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NuclearTestTableVieCellDetailViewController.swift; sourceTree = "<group>"; };
+		651916AB20F1166900F3B033 /* NuclearTestTableVieCellDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NuclearTestTableVieCellDetailViewController.xib; sourceTree = "<group>"; };
 		DA34298A20DA416B00B16EFB /* GrandNetworkDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrandNetworkDataParser.swift; sourceTree = "<group>"; };
 		DA34298C20DA52C300B16EFB /* NuclearTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NuclearTest.swift; sourceTree = "<group>"; };
 		DA40C4C720DA5D8C0058054C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -63,6 +67,7 @@
 		651916A420E7BA3900F3B033 /* GrandNetworkLayer */ = {
 			isa = PBXGroup;
 			children = (
+				DACE0D5420E492B300AB97B2 /* PeerToPeerNetworkProtocol.swift */,
 				DACE0D5620E4BA8400AB97B2 /* GrandNetworkLayerNode.swift */,
 				6519169E20E787B000F3B033 /* GNLDataStructure.swift */,
 				651916A020E7926600F3B033 /* GNLDomainUsersInfo.swift */,
@@ -77,6 +82,8 @@
 			children = (
 				651916A520F0F30200F3B033 /* NuclearTestNodeTableViewCell.swift */,
 				651916A620F0F30200F3B033 /* NuclearTestNodeTableViewCell.xib */,
+				651916AA20F1166900F3B033 /* NuclearTestTableVieCellDetailViewController.swift */,
+				651916AB20F1166900F3B033 /* NuclearTestTableVieCellDetailViewController.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -119,7 +126,6 @@
 				DA5C49C020D9EF3800B74639 /* Info.plist */,
 				DACE0D5820E4C17D00AB97B2 /* NFCNetworkNodeProtocol.swift */,
 				DA5C49C620D9EF5000B74639 /* Node.swift */,
-				DACE0D5420E492B300AB97B2 /* PeerToPeerNetworkProtocol.swift */,
 				DA34298C20DA52C300B16EFB /* NuclearTest.swift */,
 				651916A420E7BA3900F3B033 /* GrandNetworkLayer */,
 			);
@@ -186,6 +192,7 @@
 			files = (
 				651916A820F0F30200F3B033 /* NuclearTestNodeTableViewCell.xib in Resources */,
 				DA5C49BF20D9EF3800B74639 /* LaunchScreen.storyboard in Resources */,
+				651916AD20F1166900F3B033 /* NuclearTestTableVieCellDetailViewController.xib in Resources */,
 				DA5C49BC20D9EF3800B74639 /* Assets.xcassets in Resources */,
 				DA5C49BA20D9EF3700B74639 /* Main.storyboard in Resources */,
 			);
@@ -204,6 +211,7 @@
 				DACE0D5920E4C17D00AB97B2 /* NFCNetworkNodeProtocol.swift in Sources */,
 				DA5C49B320D9EF3700B74639 /* AppDelegate.swift in Sources */,
 				DACE0D5520E492B300AB97B2 /* PeerToPeerNetworkProtocol.swift in Sources */,
+				651916AC20F1166900F3B033 /* NuclearTestTableVieCellDetailViewController.swift in Sources */,
 				DA34298B20DA416B00B16EFB /* GrandNetworkDataParser.swift in Sources */,
 				DA5C49B520D9EF3700B74639 /* HomeViewController.swift in Sources */,
 				DA34298D20DA52C300B16EFB /* NuclearTest.swift in Sources */,

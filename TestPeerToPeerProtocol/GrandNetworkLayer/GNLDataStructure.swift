@@ -7,7 +7,7 @@
 //
 
 typealias Address = Int32
-typealias GNLNode = NFCNetworkNodeProtocol
+typealias GNLNode = NFCNetworkNodeProtocolForTest
 typealias GNLNodeIdentifier = NFCNodeIdentifier
 typealias GNLDomain = GNLNodeIdentifier
 typealias GNLAddress = Address
@@ -41,7 +41,7 @@ struct GNLFoundPeerAddress {
 }
 
 struct GNLPresentedPeerAddress {
-    var node: GNLNode
+    var node: GrandNetworkLayerNode
     var address: GNLFullAddress
 }
 

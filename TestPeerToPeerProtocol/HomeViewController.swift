@@ -22,6 +22,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.nodesTableView.register(UINib.init(nibName: "NuclearTestNodeTableViewCell", bundle: nil), forCellReuseIdentifier: "NuclearTestNodeTableViewCell")
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.reloadData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -29,7 +34,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     @IBAction func createNode(_ sender: Any) {
-        let name = nodeNameTextField.text!.uppercased()
+        let name = nodeNameTextField.text!.uppercased().trimmingCharacters(in: NSCharacterSet.whitespaces)
+        if name == "" {
+            return
+        }
         var blinds = [String]()
         var finders = [String]()
         if nodeBlindsTextField.text != "" {
@@ -40,6 +48,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         if labs.addNode(name: name, blinds: blinds, finders: finders) {
             reloadData()
+            nodeNameTextField.text = ""
         }
 
     }
@@ -63,25 +72,20 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let node: NFCNetworkNodeProtocolForTest = allNodes![indexPath.row]
         cell.nameLabel.text = node.peerID
         cell.parentLabel.text = "Parent: nil"
-        var foundPeers = "FoundPeers: "
-        for peer in node.foundPeers() {
-            foundPeers += peer.peerID
-            foundPeers += ", "
-        }
-        cell.foundPeersLabel.text = foundPeers
-        
-        var connectedPeers = "Connected: "
-        for peer in node.connectedUsers() {
-            connectedPeers += peer.peerID
-            connectedPeers += ", "
-        }
-        cell.childrenLabel.text = connectedPeers
+        cell.foundPeersLabel.text = node.foundPeersStr()
+        cell.childrenLabel.text = node.connectedPeersStr()
 
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 65
+        return 95
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let node: NFCNetworkNodeProtocolForTest = allNodes![indexPath.row]
+        let details = NuclearTestTableVieCellDetailViewController.init(node: node)
+        self.present(details, animated: true, completion: nil)
     }
 }
 

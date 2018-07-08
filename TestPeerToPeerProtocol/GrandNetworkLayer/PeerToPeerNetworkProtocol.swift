@@ -18,7 +18,7 @@ protocol PeerToPeerNetworkProtocol {
     func foundPeers() -> [User]
     func connectedUsers() -> [User]
     func invite(_ user: User, to netWork: Network) -> Void
-    func invitedBy(_ user: User, from netWork: Network) -> Bool
+    func invitedBy(_ user: User, from netWork: Network) -> Void
     func disconnectWithUser(_ user: User, in netWork: Network) -> Void
     func quit(_ network: Network) -> Void
     func disbandNetwork(_ network: Network) -> Void

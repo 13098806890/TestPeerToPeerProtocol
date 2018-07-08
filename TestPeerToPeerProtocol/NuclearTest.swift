@@ -30,10 +30,55 @@ class NuclearTest {
             if finders.count > 0 {
                 node.addFinders(finders)
             }
+            for oldNode in allNodes.values {
+                addFoundPeer(to: oldNode, with: node)
+            }
+            node.foundPeers = foundPeers(node: node)
             allNodes[name] = node
         }
         
         return true
+    }
+    
+    func addFoundPeer(to node: NFCNetworkNodeProtocolForTest, with foundPeer: NFCNetworkNodeProtocolForTest) {
+        if !node.foundPeers.contains(where: { (foundPeerNode) -> Bool in
+            return foundPeerNode.peerID == foundPeer.peerID
+        }) {
+            if node.onlyFoundPeers.count > 0 {
+                if node.onlyFoundPeers.contains(foundPeer.peerID) {
+                    if foundPeer.onlyFoundPeers.count > 0 {
+                        if foundPeer.onlyFoundPeers.contains(node.peerID) {
+                            if !node.unableToBeFoundPeers.contains(foundPeer.peerID) && !foundPeer.unableToBeFoundPeers.contains(node.peerID) {
+                                node.browser(foundPeer: foundPeer)
+                            }
+                        }
+                    } else {
+                        if !node.unableToBeFoundPeers.contains(foundPeer.peerID) && !foundPeer.unableToBeFoundPeers.contains(node.peerID) {
+                            node.browser(foundPeer: foundPeer)
+                        }
+                    }
+                }
+                
+            } else {
+                if foundPeer.onlyFoundPeers.count > 0 {
+                    if foundPeer.onlyFoundPeers.contains(node.peerID) && !node.unableToBeFoundPeers.contains(foundPeer.peerID) && !foundPeer.unableToBeFoundPeers.contains(node.peerID) {
+                        node.browser(foundPeer: foundPeer)
+                    }
+                } else {
+                    if !node.unableToBeFoundPeers.contains(foundPeer.peerID) && !foundPeer.unableToBeFoundPeers.contains(node.peerID) {
+                        node.browser(foundPeer: foundPeer)
+                    }
+                }
+            }
+        }
+    }
+    
+    func lostFoundPeer(to node: NFCNetworkNodeProtocolForTest, with lostPeer: NFCNetworkNodeProtocolForTest) {
+        if node.foundPeers.contains(where: { (foundPeerNode) -> Bool in
+            return foundPeerNode.peerID == lostPeer.peerID
+        }) {
+            node.browser(lostPeer: lostPeer)
+        }
     }
     
     func foundPeers(node: NFCNetworkNodeProtocolForTest, network: NetworkIdentifier) -> [NFCNetworkNodeProtocolForTest]? {
@@ -67,8 +112,35 @@ class NuclearTest {
         return nil
     }
     
-    func foundPeers(node: NFCNetworkNodeProtocolForTest) -> [NFCNetworkNodeProtocolForTest]? {
-        return foundPeers(node: node, network: NuclearTest.testNetwork)
+    func foundPeers(node: NFCNetworkNodeProtocolForTest) -> [NFCNetworkNodeProtocolForTest] {
+        if let foundPeers = foundPeers(node: node, network: NuclearTest.testNetwork) {
+            return foundPeers
+        } else {
+            return [NFCNetworkNodeProtocolForTest]()
+        }
+    }
+    
+    func connectTo(name: String, from node: NFCNetworkNodeProtocolForTest) {
+        if let addedNode = self.allNodes[name] {
+            node.invite(addedNode, to: NuclearTest.testNetwork)
+        }
+    }
+    
+    func disConnectFrom(user: NFCNetworkNodeProtocolForTest, with: NFCNetworkNodeProtocolForTest) {
+        if user.connectedUsers.contains(where: { (node) -> Bool in
+            node.peerID == with.peerID
+        }) && with.connectedUsers.contains(where: { (node) -> Bool in
+            node.peerID == user.peerID
+        }) {
+            user.lostConnectionWith(with)
+            with.lostConnectionWith(user)
+        }
+    }
+    
+    func disConnectWith(user: String, node: NFCNetworkNodeProtocolForTest) {
+        if let disConnectedNode = allNodes[user] {
+            disConnectFrom(user: node, with: disConnectedNode)
+        }
     }
 }
 

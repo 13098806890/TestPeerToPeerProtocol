@@ -11,11 +11,9 @@ import Foundation
 
 class Node: NFCNetworkNodeProtocolForTest {
 
-    
-
-
     //MARK: for testing
 
+    var foundPeers: [NFCNetworkNodeProtocolForTest] = [NFCNetworkNodeProtocolForTest]()
     let playGround = NuclearTest.labs
     var unableToBeFoundPeers: [String] = [String]()
     var onlyFoundPeers: [String] = [String]()
@@ -35,6 +33,16 @@ class Node: NFCNetworkNodeProtocolForTest {
     
     func receive(_ data: NSData, from node: NFCNetworkNodeProtocolForTest) {
         
+    }
+    
+    func browser(lostPeer peer: NFCNetworkNodeProtocolForTest) {
+        self.foundPeers = foundPeers.filter({ (node) -> Bool in
+            return node.peerID != peer.peerID
+        })
+    }
+    
+    func browser(foundPeer peer: NFCNetworkNodeProtocolForTest) {
+        self.foundPeers.append(peer)
     }
     
     //MARK: init methods
@@ -73,15 +81,6 @@ class Node: NFCNetworkNodeProtocolForTest {
 
     func advertise(_ networkIdentifier: NetworkIdentifier) {
         advertisers[networkIdentifier] = 1
-//        let nodes = playGround.networkNodes[networkIdentifier]
-//        if let blindNodes = nodes?.filter({ (node) -> Bool in
-//            return self.unableToBeFoundPeers.contains(node.peerID)
-//        }) {
-//            for node in blindNodes {
-//                node.addBlinds([self.peerID])
-//            }
-//        }
-
         playGround.networkNodes[networkIdentifier]?.append(self)
     }
 
@@ -92,7 +91,7 @@ class Node: NFCNetworkNodeProtocolForTest {
         //delete self from playGround
         if nodes != nil {
             nodes = nodes?.filter({ (node) -> Bool in
-                return node.peerID == self.peerID
+                return node.peerID != self.peerID
             })
         }
     }
@@ -105,25 +104,19 @@ class Node: NFCNetworkNodeProtocolForTest {
         browsers[networkIdentifier] = 0
     }
 
-    func foundPeers() -> [NFCNetworkNodeProtocolForTest] {
-        var nodes = [NFCNetworkNodeProtocolForTest]()
-        for key in browsers.keys {
-            if browsers[key] == 1 {
-                if let addedNode = playGround.foundPeers(node: self, network: key) {
-                    nodes += addedNode
-                }
-            }
-        }
-        
-//        // remove the connected Peer and self
-//        return nodes.filter({ (node) -> Bool in
-//            return !(self.connectedUsers.contains(where: { (connectedNode) -> Bool in
-//                return node.peerID == connectedNode.peerID
-//            }) || node.peerID == self.peerID)
-//        })
-        return nodes
-        
-    }
+//    func foundPeers() -> [NFCNetworkNodeProtocolForTest] {
+//        var nodes = [NFCNetworkNodeProtocolForTest]()
+//        for key in browsers.keys {
+//            if browsers[key] == 1 {
+//                if let addedNode = playGround.foundPeers(node: self, network: key) {
+//                    nodes += addedNode
+//                }
+//            }
+//        }
+//
+//        return nodes
+//
+//    }
 
     func invite(_ user: NFCNetworkNodeProtocolForTest, to netWork: Network) {
         user.invitedBy(self, from: netWork)
@@ -131,7 +124,7 @@ class Node: NFCNetworkNodeProtocolForTest {
 
     func invitedBy(_ user: NFCNetworkNodeProtocolForTest, from netWork: Network) {
         user.invitedResult(true, from: self, in: netWork)
-        user.connectedUser(self)
+        self.connectedUser(user)
     }
 
     func invitedResult(_ result: Bool, from node: NFCNetworkNodeProtocolForTest, in network: Network) {
@@ -148,6 +141,37 @@ class Node: NFCNetworkNodeProtocolForTest {
         for user in users {
             user.receive(data, from: self)
         }
+    }
+    
+    func disConnectWith(_ user: NFCNetworkNodeProtocolForTest) {
+        self.playGround.disConnectFrom(user: self, with: user)
+    }
+    
+    func lostConnectionWith(_ user: NFCNetworkNodeProtocolForTest) -> Void {
+        self.connectedUsers = self.connectedUsers.filter({ (node) -> Bool in
+            return node.peerID != user.peerID
+        })
+    }
+    //MARK: str
+    
+    func foundPeersStr() -> String {
+        var foundPeers = "FoundPeers: "
+        for peer in self.foundPeers {
+            foundPeers += peer.peerID
+            foundPeers += ", "
+        }
+        
+        return foundPeers
+    }
+    
+    func connectedPeersStr() -> String {
+        var connectedPeers = "Connected: "
+        for peer in self.connectedUsers {
+            connectedPeers += peer.peerID
+            connectedPeers += ", "
+        }
+        
+        return connectedPeers
     }
 
 

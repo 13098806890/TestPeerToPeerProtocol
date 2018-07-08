@@ -13,10 +13,10 @@ class GNLNetworkInfo {
     
     var leafSize: GNLInt = 2
     var reservedSize: GNLInt = 2
-    var nodes: [GNLNodeIdentifier: GNLNode] = [GNLNodeIdentifier: GNLNode]()
+    var nodes: [GNLNodeIdentifier: GrandNetworkLayerNode] = [GNLNodeIdentifier: GrandNetworkLayerNode]()
     var usersInfo: [GNLDomain: GNLDomainUsersInfo] = [GNLDomain: GNLDomainUsersInfo]()
     var foundPeers: [GNLNodeIdentifier: GNLFoundPeersTable] = [GNLNodeIdentifier: GNLFoundPeersTable]()
     var crossDomainConnectedPare: [GNLDomainPare: GNLAddressPare] = [GNLDomainPare: GNLAddressPare]()
     var crossDomainFoundPeers: [GNLDomainPare: GNLAddressPare] = [GNLDomainPare: GNLAddressPare]()
-    var connectedPeers: [GNLFullAddress: GNLNode] = [GNLFullAddress: GNLNode]()
+    var connectedPeers: [GNLFullAddress: GrandNetworkLayerNode] = [GNLFullAddress: GrandNetworkLayerNode]()
 }

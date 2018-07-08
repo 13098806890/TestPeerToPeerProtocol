@@ -47,13 +47,8 @@ class Node: NFCNetworkNodeProtocolForTest {
     
     //MARK: init methods
 
-    init(name: String, blinds: [String]) {
+    init(name: String) {
         self.peerID = name
-        self.unableToBeFoundPeers += blinds
-    }
-
-    convenience init(name: String) {
-        self.init(name: name, blinds: [String]())
     }
 
     //MARK: NFCNetworkNodeProtocol methods

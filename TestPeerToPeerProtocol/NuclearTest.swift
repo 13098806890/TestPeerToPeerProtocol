@@ -122,7 +122,11 @@ class NuclearTest {
     
     func connectTo(name: String, from node: NFCNetworkNodeProtocolForTest) {
         if let addedNode = self.allNodes[name] {
-            node.invite(addedNode, to: NuclearTest.testNetwork)
+            if node.foundPeers.contains(where: { (foundPeer) -> Bool in
+                return foundPeer.peerID == name
+            }) {
+                node.invite(addedNode, to: NuclearTest.testNetwork)
+            }
         }
     }
     

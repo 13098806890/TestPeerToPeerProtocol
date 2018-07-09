@@ -16,6 +16,8 @@
 		651916AD20F1166900F3B033 /* NuclearTestTableVieCellDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 651916AB20F1166900F3B033 /* NuclearTestTableVieCellDetailViewController.xib */; };
 		DA34298B20DA416B00B16EFB /* GrandNetworkDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34298A20DA416B00B16EFB /* GrandNetworkDataParser.swift */; };
 		DA34298D20DA52C300B16EFB /* NuclearTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34298C20DA52C300B16EFB /* NuclearTest.swift */; };
+		DA5504EC20F35FA00029262C /* MultipeerNetWorkNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5504EB20F35FA00029262C /* MultipeerNetWorkNode.swift */; };
+		DA5504EE20F361490029262C /* NuclearPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5504ED20F361490029262C /* NuclearPlayground.swift */; };
 		DA5C49B320D9EF3700B74639 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C49B220D9EF3700B74639 /* AppDelegate.swift */; };
 		DA5C49B520D9EF3700B74639 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C49B420D9EF3700B74639 /* HomeViewController.swift */; };
 		DA5C49B720D9EF3700B74639 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C49B620D9EF3700B74639 /* SecondViewController.swift */; };
@@ -39,6 +41,8 @@
 		DA34298A20DA416B00B16EFB /* GrandNetworkDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrandNetworkDataParser.swift; sourceTree = "<group>"; };
 		DA34298C20DA52C300B16EFB /* NuclearTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NuclearTest.swift; sourceTree = "<group>"; };
 		DA40C4C720DA5D8C0058054C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		DA5504EB20F35FA00029262C /* MultipeerNetWorkNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerNetWorkNode.swift; sourceTree = "<group>"; };
+		DA5504ED20F361490029262C /* NuclearPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NuclearPlayground.swift; sourceTree = "<group>"; };
 		DA5C49AF20D9EF3700B74639 /* TestPeerToPeerProtocol.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestPeerToPeerProtocol.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5C49B220D9EF3700B74639 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA5C49B420D9EF3700B74639 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +100,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		DA5504EA20F35F4F0029262C /* RealNode */ = {
+			isa = PBXGroup;
+			children = (
+				DA5504EB20F35FA00029262C /* MultipeerNetWorkNode.swift */,
+				DA5504ED20F361490029262C /* NuclearPlayground.swift */,
+			);
+			path = RealNode;
+			sourceTree = "<group>";
+		};
 		DA5C49A620D9EF3700B74639 = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +129,7 @@
 		DA5C49B120D9EF3700B74639 /* TestPeerToPeerProtocol */ = {
 			isa = PBXGroup;
 			children = (
+				DA5504EA20F35F4F0029262C /* RealNode */,
 				651916A920F1155300F3B033 /* Views */,
 				DA5C49B220D9EF3700B74639 /* AppDelegate.swift */,
 				DA5C49B420D9EF3700B74639 /* HomeViewController.swift */,
@@ -206,12 +220,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA5C49B720D9EF3700B74639 /* SecondViewController.swift in Sources */,
+				DA5504EE20F361490029262C /* NuclearPlayground.swift in Sources */,
 				651916A120E7926600F3B033 /* GNLDomainUsersInfo.swift in Sources */,
 				6519169F20E787B000F3B033 /* GNLDataStructure.swift in Sources */,
 				DACE0D5920E4C17D00AB97B2 /* NFCNetworkNodeProtocol.swift in Sources */,
 				DA5C49B320D9EF3700B74639 /* AppDelegate.swift in Sources */,
 				DACE0D5520E492B300AB97B2 /* PeerToPeerNetworkProtocol.swift in Sources */,
 				651916AC20F1166900F3B033 /* NuclearTestTableVieCellDetailViewController.swift in Sources */,
+				DA5504EC20F35FA00029262C /* MultipeerNetWorkNode.swift in Sources */,
 				DA34298B20DA416B00B16EFB /* GrandNetworkDataParser.swift in Sources */,
 				DA5C49B520D9EF3700B74639 /* HomeViewController.swift in Sources */,
 				DA34298D20DA52C300B16EFB /* NuclearTest.swift in Sources */,

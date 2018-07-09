@@ -14,7 +14,6 @@ typealias NFCNodeIdentifier = NetworkIdentifier
 import Foundation
 protocol NFCNetworkNodeProtocol {
     
-    var delegate: MutilPeerNetworkNodeDelegate {get set}
     var peerID: NFCNodeIdentifier {get}
     var browsers: [NetworkIdentifier:Int] {get}
     var advertisers: [NetworkIdentifier:Int] {get}

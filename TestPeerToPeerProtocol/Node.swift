@@ -53,7 +53,6 @@ class Node: NFCNetworkNodeProtocolForTest {
     }
 
     //MARK: NFCNetworkNodeProtocol methods
-    var delegate: MutilPeerNetworkNodeDelegate
 
     var peerID: NFCNodeIdentifier
 

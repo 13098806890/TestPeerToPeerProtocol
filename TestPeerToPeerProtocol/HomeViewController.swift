@@ -8,15 +8,20 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
+class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NotificationForTest {
+
     @IBOutlet weak var nodesTableView: UITableView!
     @IBOutlet weak var nodeNameTextField: UITextField!
     @IBOutlet weak var nodeBlindsTextField: UITextField!
     @IBOutlet weak var nodeFindersTextField: UITextField!
-    let labs = NuclearTest.labs
-    var allNodes = NuclearTest.labs.allGNLNode
-    
+    let labs = NuclearPlayground.labs
+    var allNodes = NuclearPlayground.labs.allGNLNode
+
+    override func loadView() {
+        super.loadView()
+        labs.oberservers.append(self)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.nodesTableView.register(UINib.init(nibName: "NuclearTestNodeTableViewCell", bundle: nil), forCellReuseIdentifier: "NuclearTestNodeTableViewCell")
@@ -50,6 +55,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             reloadData()
             nodeNameTextField.text = ""
         }
+        self.view.endEditing(true)
 
     }
     
@@ -65,8 +71,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: NuclearTestNodeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NuclearTestNodeTableViewCell") as! NuclearTestNodeTableViewCell
-        let node: NFCNetworkNodeProtocolForTest = allNodes[indexPath.row].node
-        cell.nameLabel.text = node.peerID
+        let node: MultipeerNetWorkNode = allNodes[indexPath.row].node
+        cell.nameLabel.text = node.name()
         cell.parentLabel.text = "Parent: nil"
         cell.foundPeersLabel.text = node.foundPeersStr()
         cell.childrenLabel.text = node.connectedPeersStr()
@@ -79,9 +85,19 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let node: NFCNetworkNodeProtocolForTest = allNodes[indexPath.row].node
+        let node: GrandNetworkLayerNode = allNodes[indexPath.row]
         let details = NuclearTestTableVieCellDetailViewController.init(node: node)
         self.present(details, animated: true, completion: nil)
     }
+
+    //MARK: NotificationForTest
+    func foundPeer(node: MultipeerNetWorkNode, peerID: String, withDiscoveryInfo info: [String : String]?) {
+        reloadData()
+    }
+
+    func connected(node: MultipeerNetWorkNode, with peer: String) {
+        reloadData()
+    }
+
 }
 

@@ -36,8 +36,6 @@ class NuclearTest {
             }
             node.foundPeers = foundPeers(node: node)
             allNodes[name] = node
-            let gnlNode = GrandNetworkLayerNode.init(node: node)
-            allGNLNode.append(gnlNode)
         }
         
         return true

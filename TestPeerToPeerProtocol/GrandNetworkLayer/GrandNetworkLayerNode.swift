@@ -14,15 +14,15 @@ class GrandNetworkLayerNode {
     var isMainNode: Bool = true
     var domain: GNLDomain
     var address: GNLAddress
-    var node: GNLNode
+    var node: MultipeerNetWorkNode
     var fullAddress: GNLFullAddress
     var parent: GrandNetworkLayerNode?
     var children: [GNLAddress: GrandNetworkLayerNode] = [GNLAddress: GrandNetworkLayerNode]()
     var networkInfo: GNLNetworkInfo = GNLNetworkInfo()
     
-    init(node: GNLNode) {
+    init(node: MultipeerNetWorkNode) {
         self.node = node
-        domain = node.peerID
+        domain = node.name()
         address = 0
         fullAddress = GNLFullAddress(domain: domain, address: address)
     }

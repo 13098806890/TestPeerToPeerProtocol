@@ -8,17 +8,17 @@
 
 import UIKit
 
-class NuclearTestTableVieCellDetailViewController: UIViewController {
+class NuclearTestTableVieCellDetailViewController: UIViewController, NotificationForTest {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var connectNodeTextField: UITextField!
     @IBOutlet weak var disConnectedNodeTextField: UITextField!
     @IBOutlet weak var foundPeersLabel: UILabel!
     @IBOutlet weak var connectedPeersLabel: UILabel!
-    var node: NFCNetworkNodeProtocolForTest
+    var GNL: GrandNetworkLayerNode
     
-    init(node: NFCNetworkNodeProtocolForTest) {
-        self.node = node
+    init(node: GrandNetworkLayerNode) {
+        self.GNL = node
         super.init(nibName: "NuclearTestTableVieCellDetailViewController", bundle: nil)
     }
     
@@ -27,15 +27,16 @@ class NuclearTestTableVieCellDetailViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        NuclearPlayground.labs.oberservers.append(self)
         super.viewDidLoad()
         self.reloadView()
         
     }
     
     func reloadView() {
-        self.nameLabel.text = node.peerID
-        self.foundPeersLabel.text = node.foundPeersStr()
-        self.connectedPeersLabel.text = node.connectedPeersStr()
+        self.nameLabel.text = GNL.node.name()
+        self.foundPeersLabel.text = GNL.node.foundPeersStr()
+        self.connectedPeersLabel.text = GNL.node.connectedPeersStr()
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,8 +49,8 @@ class NuclearTestTableVieCellDetailViewController: UIViewController {
     }
     
     @IBAction func connect(_ sender: Any) {
-        if connectNodeTextField.text?.uppercased() != node.peerID && connectNodeTextField.text != "" {
-            NuclearTest.labs.connectTo(name: self.connectNodeTextField.text!.uppercased(), from: node)
+        if connectNodeTextField.text?.uppercased() != GNL.node.name() && connectNodeTextField.text != "" {
+            GNL.node.invite(node: connectNodeTextField.text!.uppercased(), withContext: nil, timeout: 1000)
             self.connectNodeTextField.text = ""
             self.reloadView()
         }
@@ -57,20 +58,18 @@ class NuclearTestTableVieCellDetailViewController: UIViewController {
     
     @IBAction func disConnect(_ sender: Any) {
         if disConnectedNodeTextField.text != "" {
-            NuclearTest.labs.disConnectWith(user: disConnectedNodeTextField.text!.uppercased(), node: node)
             self.disConnectedNodeTextField.text = ""
             self.reloadView()
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    //MARK: NotificationForTest
+    func foundPeer(node: MultipeerNetWorkNode, peerID: String, withDiscoveryInfo info: [String : String]?) {
+        reloadView()
     }
-    */
+
+    func connected(node: MultipeerNetWorkNode, with peer: String) {
+        reloadView()
+    }
 
 }

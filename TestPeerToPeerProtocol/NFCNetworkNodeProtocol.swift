@@ -14,6 +14,7 @@ typealias NFCNodeIdentifier = NetworkIdentifier
 import Foundation
 protocol NFCNetworkNodeProtocol {
     
+    var delegate: MutilPeerNetworkNodeDelegate {get set}
     var peerID: NFCNodeIdentifier {get}
     var browsers: [NetworkIdentifier:Int] {get}
     var advertisers: [NetworkIdentifier:Int] {get}
@@ -41,6 +42,7 @@ protocol NFCNetworkNodeProtocol {
 }
 
 protocol NFCNetworkNodeProtocolForTest: NFCNetworkNodeProtocol{
+    var disCoverInfo: [String: String]? {get}
     var unableToBeFoundPeers: [String] {get}
     var onlyFoundPeers: [String] {get}
     func addBlinds(_ blinds: [String]) -> Void
@@ -49,5 +51,9 @@ protocol NFCNetworkNodeProtocolForTest: NFCNetworkNodeProtocol{
     func foundPeersStr() -> String
     func connectedPeersStr() -> String
     func browser(lostPeer peer: NFCNetworkNodeProtocolForTest)
-    func browser(foundPeer peer: NFCNetworkNodeProtocolForTest)
+    func browser(foundPeer peer: NFCNetworkNodeProtocolForTest, withDiscoveryInfo info: [String: String]?)
+}
+
+protocol MutilPeerNetworkNodeDelegate {
+    func disCoverUserInfo() -> [String: String]?
 }

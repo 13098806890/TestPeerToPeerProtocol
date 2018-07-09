@@ -15,7 +15,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var nodeBlindsTextField: UITextField!
     @IBOutlet weak var nodeFindersTextField: UITextField!
     let labs = NuclearTest.labs
-    var allNodes = NuclearTest.labs.networkNodes[NuclearTest.testNetwork]
+    var allNodes = NuclearTest.labs.allGNLNode
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,22 +54,18 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func reloadData() {
-        allNodes = labs.networkNodes[NuclearTest.testNetwork]
+        allNodes = labs.allGNLNode
         self.nodesTableView.reloadData()
     }
     
     //MARK: UITableView delegate and datasource methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if allNodes == nil {
-            return 0
-        } else {
-            return allNodes!.count
-        }
+       return allNodes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: NuclearTestNodeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NuclearTestNodeTableViewCell") as! NuclearTestNodeTableViewCell
-        let node: NFCNetworkNodeProtocolForTest = allNodes![indexPath.row]
+        let node: NFCNetworkNodeProtocolForTest = allNodes[indexPath.row].node
         cell.nameLabel.text = node.peerID
         cell.parentLabel.text = "Parent: nil"
         cell.foundPeersLabel.text = node.foundPeersStr()
@@ -83,7 +79,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let node: NFCNetworkNodeProtocolForTest = allNodes![indexPath.row]
+        let node: NFCNetworkNodeProtocolForTest = allNodes[indexPath.row].node
         let details = NuclearTestTableVieCellDetailViewController.init(node: node)
         self.present(details, animated: true, completion: nil)
     }

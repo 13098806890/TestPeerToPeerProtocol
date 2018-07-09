@@ -8,22 +8,23 @@
 
 import Foundation
 
-class GrandNetworkLayerNode: Node {
+class GrandNetworkLayerNode {
     
     //MARK: Properties
     var isMainNode: Bool = true
     var domain: GNLDomain
     var address: GNLAddress
+    var node: GNLNode
     var fullAddress: GNLFullAddress
     var parent: GrandNetworkLayerNode?
     var children: [GNLAddress: GrandNetworkLayerNode] = [GNLAddress: GrandNetworkLayerNode]()
     var networkInfo: GNLNetworkInfo = GNLNetworkInfo()
     
-    override init(name: String) {
+    init(node: GNLNode) {
+        self.node = node
         domain = node.peerID
         address = 0
         fullAddress = GNLFullAddress(domain: domain, address: address)
-        super.init(name: name)
     }
     
     private func childStartAddress() -> GNLAddress {
@@ -35,10 +36,6 @@ class GrandNetworkLayerNode: Node {
     }
     
     //MARK: GrandNetworkLayer
-    
-    override func browser(foundPeer peer: NFCNetworkNodeProtocolForTest) {
-        <#code#>
-    }
     
     
     

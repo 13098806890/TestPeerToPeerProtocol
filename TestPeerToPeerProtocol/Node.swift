@@ -17,6 +17,7 @@ class Node: NFCNetworkNodeProtocolForTest {
     let playGround = NuclearTest.labs
     var unableToBeFoundPeers: [String] = [String]()
     var onlyFoundPeers: [String] = [String]()
+    var disCoverInfo: [String: String]?
     func addBlinds(_ blinds: [String]) {
         self.unableToBeFoundPeers += blinds
     }
@@ -40,11 +41,11 @@ class Node: NFCNetworkNodeProtocolForTest {
             return node.peerID != peer.peerID
         })
     }
-    
-    func browser(foundPeer peer: NFCNetworkNodeProtocolForTest) {
+
+    func browser(foundPeer peer: NFCNetworkNodeProtocolForTest, withDiscoveryInfo info: [String : String]?) {
         self.foundPeers.append(peer)
     }
-    
+
     //MARK: init methods
 
     init(name: String) {
@@ -52,6 +53,8 @@ class Node: NFCNetworkNodeProtocolForTest {
     }
 
     //MARK: NFCNetworkNodeProtocol methods
+    var delegate: MutilPeerNetworkNodeDelegate
+
     var peerID: NFCNodeIdentifier
 
     var browsers: [NetworkIdentifier : Int] = [NetworkIdentifier : Int]()
@@ -98,20 +101,6 @@ class Node: NFCNetworkNodeProtocolForTest {
     func stopBrowse(_ networkIdentifier: NetworkIdentifier) {
         browsers[networkIdentifier] = 0
     }
-
-//    func foundPeers() -> [NFCNetworkNodeProtocolForTest] {
-//        var nodes = [NFCNetworkNodeProtocolForTest]()
-//        for key in browsers.keys {
-//            if browsers[key] == 1 {
-//                if let addedNode = playGround.foundPeers(node: self, network: key) {
-//                    nodes += addedNode
-//                }
-//            }
-//        }
-//
-//        return nodes
-//
-//    }
 
     func invite(_ user: NFCNetworkNodeProtocolForTest, to netWork: Network) {
         user.invitedBy(self, from: netWork)

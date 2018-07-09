@@ -14,6 +14,7 @@ class NuclearTest {
     var allTestNodesName: [String] = [String]()
     var networkNodes: [NetworkIdentifier:[NFCNetworkNodeProtocolForTest]] = [NetworkIdentifier:[NFCNetworkNodeProtocolForTest]]()
     var allNodes: [String: NFCNetworkNodeProtocolForTest] = [String: NFCNetworkNodeProtocolForTest]()
+    var allGNLNode: [GrandNetworkLayerNode] = [GrandNetworkLayerNode]()
     
     func addNode(name: String, blinds: [String], finders: [String]) -> Bool {
         if allTestNodesName.contains(name) {
@@ -35,6 +36,8 @@ class NuclearTest {
             }
             node.foundPeers = foundPeers(node: node)
             allNodes[name] = node
+            let gnlNode = GrandNetworkLayerNode.init(node: node)
+            allGNLNode.append(gnlNode)
         }
         
         return true
@@ -49,12 +52,12 @@ class NuclearTest {
                     if foundPeer.onlyFoundPeers.count > 0 {
                         if foundPeer.onlyFoundPeers.contains(node.peerID) {
                             if !node.unableToBeFoundPeers.contains(foundPeer.peerID) && !foundPeer.unableToBeFoundPeers.contains(node.peerID) {
-                                node.browser(foundPeer: foundPeer)
+                                node.browser(foundPeer: foundPeer, withDiscoveryInfo: foundPeer.disCoverInfo)
                             }
                         }
                     } else {
                         if !node.unableToBeFoundPeers.contains(foundPeer.peerID) && !foundPeer.unableToBeFoundPeers.contains(node.peerID) {
-                            node.browser(foundPeer: foundPeer)
+                            node.browser(foundPeer: foundPeer, withDiscoveryInfo: foundPeer.disCoverInfo)
                         }
                     }
                 }
@@ -62,11 +65,11 @@ class NuclearTest {
             } else {
                 if foundPeer.onlyFoundPeers.count > 0 {
                     if foundPeer.onlyFoundPeers.contains(node.peerID) && !node.unableToBeFoundPeers.contains(foundPeer.peerID) && !foundPeer.unableToBeFoundPeers.contains(node.peerID) {
-                        node.browser(foundPeer: foundPeer)
+                        node.browser(foundPeer: foundPeer, withDiscoveryInfo: foundPeer.disCoverInfo)
                     }
                 } else {
                     if !node.unableToBeFoundPeers.contains(foundPeer.peerID) && !foundPeer.unableToBeFoundPeers.contains(node.peerID) {
-                        node.browser(foundPeer: foundPeer)
+                        node.browser(foundPeer: foundPeer, withDiscoveryInfo: foundPeer.disCoverInfo)
                     }
                 }
             }

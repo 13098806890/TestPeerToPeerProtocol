@@ -8,12 +8,17 @@
 
 import MultipeerConnectivity
 
+protocol MultipeerTransportLayerDelegate {
+    func browser(foundPeer peerID: String, withDiscoveryInfo info: [String : String]?) -> Void
+}
+
 class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
 
     //MARK: just for playground test
     let playGround = NuclearPlayground.labs
     open var blindsPeers: [String] = [String]()
     open var finderPeers: [String] = [String]()
+    
     open func addBlinds(_ blinds: [String]) {
         self.blindsPeers += blinds
     }
@@ -27,7 +32,7 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
     }
 
     open func name() -> String {
-        return self.peer.displayName
+        return self.peer.description
     }
 
     func discoveryInfoForTest() -> [String: String]? {
@@ -43,32 +48,6 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
         }
 
         return info
-    }
-
-    //MARK: str
-
-    func foundPeersStr() -> String {
-        var foundPeers = "FoundPeers: "
-        for (index, peer) in self.foundPeers.enumerated() {
-            foundPeers += peer.displayName
-            if index != self.foundPeers.count - 1 {
-                foundPeers += ", "
-            }
-        }
-
-        return foundPeers
-    }
-
-    func connectedPeersStr() -> String {
-        var connectedPeers = "Connected: "
-        for (index, peer) in self.session.connectedPeers.enumerated() {
-            connectedPeers += peer.displayName
-            if index != self.session.connectedPeers.count - 1 {
-                connectedPeers += ", "
-            }
-        }
-
-        return connectedPeers
     }
 
     func blindsStr() -> String {
@@ -107,6 +86,7 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
 
     internal var invitationHandler: ((Bool) -> Void)!
 
+    open var delegate: MultipeerTransportLayerDelegate?
 
     var isMaster: Bool = false
 
@@ -235,5 +215,31 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
     internal func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) { }
 
     internal func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) { }
+
+
+    //MARK: str
+    func foundPeersStr() -> String {
+        var foundPeers = "FoundPeers: "
+        for (index, peer) in self.foundPeers.enumerated() {
+            foundPeers += peer.displayName
+            if index != self.foundPeers.count - 1 {
+                foundPeers += ", "
+            }
+        }
+
+        return foundPeers
+    }
+
+    func connectedPeersStr() -> String {
+        var connectedPeers = "Connected: "
+        for (index, peer) in self.session.connectedPeers.enumerated() {
+            connectedPeers += peer.displayName
+            if index != self.session.connectedPeers.count - 1 {
+                connectedPeers += ", "
+            }
+        }
+
+        return connectedPeers
+    }
 }
 

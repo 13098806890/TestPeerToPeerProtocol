@@ -8,8 +8,8 @@
 
 import Foundation
 
-class GrandNetworkLayerNode {
-    
+class GrandNetworkLayerNode: MultipeerTransportLayerDelegate {
+
     //MARK: Properties
     var isMainNode: Bool = true
     var domain: GNLDomain
@@ -25,6 +25,7 @@ class GrandNetworkLayerNode {
         domain = node.name()
         address = 0
         fullAddress = GNLFullAddress(domain: domain, address: address)
+        node.delegate = self
     }
     
     private func childStartAddress() -> GNLAddress {
@@ -34,9 +35,17 @@ class GrandNetworkLayerNode {
     private func childrenSize() -> GNLInt {
         return networkInfo.leafSize + networkInfo.reservedSize
     }
+
+    //MARK: MultipeerTransportLayerDelegate
+
+    func browser(foundPeer peerID: String, withDiscoveryInfo info: [String : String]?) {
+        
+    }
     
     //MARK: GrandNetworkLayer
-    
+    func sendFoundPeerInstruction(peerId: String) {
+
+    }
     
     
 

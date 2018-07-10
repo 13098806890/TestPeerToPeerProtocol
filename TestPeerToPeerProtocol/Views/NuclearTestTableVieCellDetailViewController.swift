@@ -30,13 +30,14 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, Notificatio
         NuclearPlayground.labs.oberservers.append(self)
         super.viewDidLoad()
         self.reloadView()
-        
     }
     
     func reloadView() {
-        self.nameLabel.text = GNL.node.name()
-        self.foundPeersLabel.text = GNL.node.foundPeersStr()
-        self.connectedPeersLabel.text = GNL.node.connectedPeersStr()
+        DispatchQueue.main.async {
+            self.nameLabel.text = self.GNL.node.name()
+            self.foundPeersLabel.text = self.GNL.node.foundPeersStr()
+            self.connectedPeersLabel.text = self.GNL.node.connectedPeersStr()
+        }
     }
 
     override func didReceiveMemoryWarning() {

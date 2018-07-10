@@ -61,7 +61,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func reloadData() {
         allNodes = labs.allGNLNode
-        self.nodesTableView.reloadData()
+        DispatchQueue.main.async {
+            self.nodesTableView.reloadData()
+        }
     }
     
     //MARK: UITableView delegate and datasource methods

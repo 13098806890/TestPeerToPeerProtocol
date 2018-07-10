@@ -32,7 +32,7 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
     }
 
     open func name() -> String {
-        return self.peer.description
+        return self.peer.displayName
     }
 
     func discoveryInfoForTest() -> [String: String]? {

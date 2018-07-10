@@ -10,10 +10,18 @@ import Foundation
 
 public enum MultipeerDataType: String {
 
-    case nodesInfo
+    case Broadcast
+    
+    case Instruction
 
-    case message
+    case Message
 }
+
+public enum GNLBroadcastType {
+    case FoundPeer
+}
+
+
 
 class GrandNetworkData: NSObject, NSCoding {
 

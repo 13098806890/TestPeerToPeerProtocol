@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -41,7 +40,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FoundPeers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Myn-aq-LRI">
-                        <rect key="frame" x="16" y="36" width="354" height="21"/>
+                        <rect key="frame" x="16" y="36" width="77" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="NA4-dZ-ns4"/>
                         </constraints>
@@ -69,6 +68,7 @@
                     <constraint firstItem="g94-1N-LmR" firstAttribute="top" secondItem="Myn-aq-LRI" secondAttribute="bottom" constant="8" symbolic="YES" id="hkc-M3-Az7"/>
                     <constraint firstItem="g94-1N-LmR" firstAttribute="leading" secondItem="Myn-aq-LRI" secondAttribute="leading" id="kml-3s-Q0g"/>
                     <constraint firstItem="Myn-aq-LRI" firstAttribute="top" secondItem="L14-Vd-NhW" secondAttribute="bottom" constant="8" id="skW-Ie-X3v"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="g94-1N-LmR" secondAttribute="trailing" constant="10" id="tYp-5x-rmX"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

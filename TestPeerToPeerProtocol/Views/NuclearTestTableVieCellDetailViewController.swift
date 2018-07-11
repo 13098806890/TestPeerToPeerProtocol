@@ -13,6 +13,7 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, Notificatio
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var connectNodeTextField: UITextField!
     @IBOutlet weak var disConnectedNodeTextField: UITextField!
+    @IBOutlet weak var sendDataNodeTextField: UITextField!
     @IBOutlet weak var foundPeersLabel: UILabel!
     @IBOutlet weak var connectedPeersLabel: UILabel!
     var GNL: GrandNetworkLayerNode
@@ -63,7 +64,13 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, Notificatio
             self.reloadView()
         }
     }
-    
+
+    @IBAction func sendData(_ sender: Any) {
+        if sendDataNodeTextField.text != "" {
+            GNL.node.sendTestData(to: sendDataNodeTextField.text!.uppercased())
+        }
+    }
+
     //MARK: NotificationForTest
     func foundPeer(node: MultipeerNetWorkNode, peerID: String, withDiscoveryInfo info: [String : String]?) {
         reloadView()

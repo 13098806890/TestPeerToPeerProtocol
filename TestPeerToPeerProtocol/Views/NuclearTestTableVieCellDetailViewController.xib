@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,6 +16,7 @@
                 <outlet property="disConnectedNodeTextField" destination="06b-DI-HcQ" id="NxC-D9-Cxh"/>
                 <outlet property="foundPeersLabel" destination="Ct9-WX-UA5" id="c6u-xA-1bi"/>
                 <outlet property="nameLabel" destination="wMJ-QH-noa" id="8Xq-CC-wSv"/>
+                <outlet property="sendDataNodeTextField" destination="22b-y9-dah" id="QjM-Nu-P07"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -48,6 +48,13 @@
                 </label>
                 <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2wW-jb-Fn1">
                     <rect key="frame" x="28" y="104" width="184" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="22b-y9-dah">
+                    <rect key="frame" x="28" y="212" width="184" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -88,6 +95,14 @@
                     <state key="normal" title="DisConnect"/>
                     <connections>
                         <action selector="disConnect:" destination="-1" eventType="touchUpInside" id="oAI-m3-hrV"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jbj-pJ-Mig">
+                    <rect key="frame" x="296" y="212" width="68" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="SendData"/>
+                    <connections>
+                        <action selector="sendData:" destination="-1" eventType="touchUpInside" id="P5g-Dw-jXG"/>
                     </connections>
                 </button>
             </subviews>

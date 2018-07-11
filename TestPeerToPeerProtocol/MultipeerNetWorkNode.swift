@@ -35,6 +35,20 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
         return self.peer.displayName
     }
 
+    open func sendTestData(to peer: String) {
+        for connectedPeer in self.session.connectedPeers {
+            if peer == connectedPeer.displayName {
+                let data = Data.init(bytes: [1,2,3,4])
+                do {
+                    _ = try session.send(data , toPeers: [connectedPeer], with: .reliable)
+                } catch {
+                    print(error)
+                }
+                break
+            }
+        }
+    }
+
     func discoveryInfoForTest() -> [String: String]? {
         var info: [String: String]?
         if blindsPeers.count > 0 || finderPeers.count > 0 {
@@ -155,6 +169,7 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
         for (index, aPeer) in foundPeers.enumerated() {
             if aPeer == peerID {
                 foundPeers.remove(at: index)
+                playGround.foundPeer(node: self, peerID: peerID.displayName, withDiscoveryInfo: nil)
                 break
             }
         }
@@ -215,6 +230,7 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
     internal func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) { }
 
     internal func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) { }
+
 
 
     //MARK: str

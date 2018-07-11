@@ -10,5 +10,4 @@ import Foundation
 
 class GNLDomainUsersInfo {
     var nodeKeyTable: [GNLNodeIdentifier: GNLAddress] = [GNLNodeIdentifier: GNLAddress]()
-    var addressKeyTable: [GNLAddress: GNLNodeIdentifier] = [GNLAddress: GNLNodeIdentifier]()
 }

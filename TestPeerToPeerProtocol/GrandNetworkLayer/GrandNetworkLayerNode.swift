@@ -12,14 +12,25 @@ class GrandNetworkLayerNode: MultipeerTransportLayerDelegate {
 
     //MARK: Properties
     var isMainNode: Bool = true
+    var displayName: String
     var domain: GNLDomain
     var address: GNLAddress
-    var node: MultipeerNetWorkNode
+    var cluster: MultipeerNetWorkNode
+    var parent: MultipeerNetWorkNode
     var fullAddress: GNLFullAddress
-    var parent: GrandNetworkLayerNode?
-    var children: [GNLAddress: GrandNetworkLayerNode] = [GNLAddress: GrandNetworkLayerNode]()
+    var children: [GNLAddress: MultipeerNetWorkNode] = [GNLAddress: MultipeerNetWorkNode]()
     var networkInfo: GNLNetworkInfo = GNLNetworkInfo()
-    
+    var closePeers: [String]?
+
+    init(displayName: String) {
+        self.address = 0
+        self.domain = displayName
+        self.displayName = displayName
+        self.parent = MultipeerNetWorkNode.init(displayName)
+
+
+    }
+
     init(node: MultipeerNetWorkNode) {
         self.node = node
         domain = node.name()

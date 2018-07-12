@@ -73,11 +73,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: NuclearTestNodeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NuclearTestNodeTableViewCell") as! NuclearTestNodeTableViewCell
-        let node: MultipeerNetWorkNode = allNodes[indexPath.row].parent
-        cell.nameLabel.text = node.name()
+        let node: GrandNetworkLayerNode = allNodes[indexPath.row]
+        cell.nameLabel.text = node.displayName
         cell.parentLabel.text = "Parent: nil"
         cell.foundPeersLabel.text = node.foundPeersStr()
-        cell.childrenLabel.text = node.connectedPeersStr()
+        cell.childrenLabel.text = "node.connectedPeersStr()"
 
         return cell
     }

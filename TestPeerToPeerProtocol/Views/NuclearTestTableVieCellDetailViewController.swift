@@ -51,11 +51,11 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, Notificatio
     }
     
     @IBAction func connect(_ sender: Any) {
-        if connectNodeTextField.text?.uppercased() != GNL.parent.name() && connectNodeTextField.text != "" {
-            GNL.parent.invite(node: connectNodeTextField.text!.uppercased(), withContext: nil, timeout: 1000)
-            self.connectNodeTextField.text = ""
-            self.reloadView()
-        }
+//        if connectNodeTextField.text?.uppercased() != GNL.parent.name() && connectNodeTextField.text != "" {
+//            GNL.parent.invite(node: connectNodeTextField.text!.uppercased(), withContext: nil, timeout: 1000)
+//            self.connectNodeTextField.text = ""
+//            self.reloadView()
+//        }
     }
     
     @IBAction func disConnect(_ sender: Any) {

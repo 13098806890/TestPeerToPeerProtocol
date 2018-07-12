@@ -16,14 +16,8 @@ protocol NotificationForTest {
 class NuclearPlayground: NotificationForTest {
     static let labs = NuclearPlayground()
     var allNodesName: [String] = [String]()
-    var allNodes: [String: MultipeerNetWorkNode] = [String: MultipeerNetWorkNode]()
     var allGNLNode: [GrandNetworkLayerNode] = [GrandNetworkLayerNode]()
     open var oberservers: [NotificationForTest] = [NotificationForTest]()
-
-    func startAdvertiser(node: MultipeerNetWorkNode) {
-        self.allNodesName.append(node.name())
-        self.allNodes[node.name()] = node
-    }
 
     func addNode(name: String, blinds: [String], finders: [String]) -> Bool {
         if allNodesName.contains(name) {
@@ -37,8 +31,8 @@ class NuclearPlayground: NotificationForTest {
             if finders.count > 0 {
                 GNLNode.parent.addFinders(finders)
             }
-            self.allNodes[name] = GNLNode.parent
             self.allGNLNode.append(GNLNode)
+            
         }
 
         return true

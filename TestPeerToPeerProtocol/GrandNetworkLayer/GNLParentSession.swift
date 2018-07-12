@@ -12,6 +12,7 @@ import MultipeerConnectivity
 protocol GNLParentSessionDelegate: AnyObject {
     func browser(foundPeer peerID: String, withDiscoveryInfo info: [String : String]?) -> Void
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: String) -> Void
+    func usersBeFound() -> [String]
     func usersInNetwork() -> [String]
     func GNLNodeName(_ peersDisplayName: String) -> String
 }
@@ -29,26 +30,26 @@ class GNLParentSession: MultipeerNetWorkNode {
     //MARK : - MCNearbyServiceBrowserDelegate
     override func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
 
+        foundPeers[peerID.displayName] = peerID
         let GNLNodeName = delegate.GNLNodeName(peerID.displayName)
         if delegate.usersInNetwork().contains(GNLNodeName) {
-            if foundPeers[peerID.displayName] == nil {
-                foundPeers[peerID.displayName] = peerID
-            }
+            return
+        }
+        if delegate.usersBeFound().contains(GNLNodeName) {
+            return
         }
         //For Test
         if info != nil {
             let peerBlinds = info!["blinds"]?.components(separatedBy: CharacterSet.init(charactersIn: ","))
             let peerFinders = info!["finders"]?.components(separatedBy: CharacterSet.init(charactersIn: ","))
-            if playGround.shouldFound(peerID: peerID.displayName, blinds: blindsPeers, finders: finderPeers) && playGround.shouldFound(peerID: self.peer.displayName, blinds:peerBlinds , finders: peerFinders) {
-                foundPeers[peerID.displayName] = peerID
-                delegate.browser(foundPeer: peerID.displayName, withDiscoveryInfo: info)
-                playGround.foundPeer(node: self, peerID: peerID.displayName, withDiscoveryInfo: info)
+            if playGround.shouldFound(peerID: GNLNodeName, blinds: blindsPeers, finders: finderPeers) && playGround.shouldFound(peerID: self.peer.displayName, blinds:peerBlinds , finders: peerFinders) {
+                delegate.browser(foundPeer: GNLNodeName, withDiscoveryInfo: info)
+                playGround.foundPeer(node: self, peerID: GNLNodeName, withDiscoveryInfo: info)
             }
         } else {
-            if playGround.shouldFound(peerID: peerID.displayName, blinds: blindsPeers, finders: finderPeers) {
-                foundPeers[peerID.displayName] = peerID
-                delegate.browser(foundPeer: peerID.displayName, withDiscoveryInfo: info)
-                playGround.foundPeer(node: self, peerID: peerID.displayName, withDiscoveryInfo: info)
+            if playGround.shouldFound(peerID: GNLNodeName, blinds: blindsPeers, finders: finderPeers) {
+                delegate.browser(foundPeer: GNLNodeName, withDiscoveryInfo: info)
+                playGround.foundPeer(node: self, peerID: GNLNodeName, withDiscoveryInfo: info)
             }
         }
     }
@@ -58,7 +59,7 @@ class GNLParentSession: MultipeerNetWorkNode {
             foundPeers.removeValue(forKey: peerID.displayName)
         }
         let GNLNodeName = delegate.GNLNodeName(peerID.displayName)
-        if delegate.usersInNetwork().contains(GNLNodeName) {
+        if delegate.usersBeFound().contains(GNLNodeName) {
             delegate.browser(browser, lostPeer: peerID.displayName)
         }
     }

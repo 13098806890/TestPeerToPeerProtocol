@@ -21,12 +21,12 @@ class GrandNetworkLayerNode: GNLParentSessionDelegate {
     var children: [GNLAddress: MultipeerNetWorkNode] = [GNLAddress: MultipeerNetWorkNode]()
     var networkInfo: GNLNetworkInfo = GNLNetworkInfo()
     var foundPeers: [String] = [String]()
+    var _usersInNetwork: [String] = [String]()
 
     lazy var cluster: GNLClusterSession = GNLClusterSession.init(displayName, serviceType: serviceType)
     lazy var parent: GNLParentSession = GNLParentSession.init(displayName, serviceType: serviceType, delegate: self)
 
     var closePeers: [String]?
-    var _usersInNetwork: [String] = [String]()
 
     init(name: String, service: String = "GNL-test") {
         address = 0
@@ -65,9 +65,13 @@ class GrandNetworkLayerNode: GNLParentSessionDelegate {
 
         return peersDisplayName
     }
-
+    
     func usersInNetwork() -> [String] {
         return _usersInNetwork
+    }
+    
+    func usersBeFound() -> [String] {
+        return foundPeers
     }
 
     func browser(foundPeer peerID: String, withDiscoveryInfo info: [String : String]?) {
@@ -83,6 +87,19 @@ class GrandNetworkLayerNode: GNLParentSessionDelegate {
     //MARK: GrandNetworkLayer
     func sendFoundPeerInstruction(peerId: String) {
 
+    }
+    
+    //MARK: Str
+    func foundPeersStr() -> String {
+        var foundPeers = "FoundPeers: "
+        for (index, peer) in self.foundPeers.enumerated() {
+            foundPeers += peer
+            if index != self.foundPeers.count - 1 {
+                foundPeers += ", "
+            }
+        }
+        
+        return foundPeers
     }
     
     

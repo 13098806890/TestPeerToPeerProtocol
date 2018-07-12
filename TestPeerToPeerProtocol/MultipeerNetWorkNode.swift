@@ -29,10 +29,6 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
         return peers
     }
 
-    open func name() -> String {
-        return self.peer.displayName
-    }
-
     open func sendTestData(to peer: String) {
         for connectedPeer in self.session.connectedPeers {
             if peer == connectedPeer.displayName {

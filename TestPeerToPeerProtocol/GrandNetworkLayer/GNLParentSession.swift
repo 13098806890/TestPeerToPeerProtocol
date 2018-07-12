@@ -11,6 +11,7 @@ import MultipeerConnectivity
 
 protocol GNLParentSessionDelegate: AnyObject {
     func browser(foundPeer peerID: String, withDiscoveryInfo info: [String : String]?) -> Void
+    func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: String) -> Void
     func usersInNetwork() -> [String]
     func GNLNodeName(_ peersDisplayName: String) -> String
 }
@@ -50,8 +51,16 @@ class GNLParentSession: MultipeerNetWorkNode {
                 playGround.foundPeer(node: self, peerID: peerID.displayName, withDiscoveryInfo: info)
             }
         }
+    }
 
-
+    override func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
+        if foundPeers[peerID.displayName] != nil {
+            foundPeers.removeValue(forKey: peerID.displayName)
+        }
+        let GNLNodeName = delegate.GNLNodeName(peerID.displayName)
+        if delegate.usersInNetwork().contains(GNLNodeName) {
+            delegate.browser(browser, lostPeer: peerID.displayName)
+        }
     }
 
 

@@ -20,6 +20,7 @@ class GrandNetworkLayerNode: GNLParentSessionDelegate {
     var fullAddress: GNLFullAddress
     var children: [GNLAddress: MultipeerNetWorkNode] = [GNLAddress: MultipeerNetWorkNode]()
     var networkInfo: GNLNetworkInfo = GNLNetworkInfo()
+    var foundPeers: [String] = [String]()
 
     lazy var cluster: GNLClusterSession = GNLClusterSession.init(displayName, serviceType: serviceType)
     lazy var parent: GNLParentSession = GNLParentSession.init(displayName, serviceType: serviceType, delegate: self)
@@ -70,9 +71,15 @@ class GrandNetworkLayerNode: GNLParentSessionDelegate {
     }
 
     func browser(foundPeer peerID: String, withDiscoveryInfo info: [String : String]?) {
-
+        foundPeers.append(peerID)
     }
     
+    func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: String) {
+        if let index = foundPeers.index(of: peerID) {
+            foundPeers.remove(at: index)
+        }
+
+    }
     //MARK: GrandNetworkLayer
     func sendFoundPeerInstruction(peerId: String) {
 

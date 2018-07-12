@@ -24,7 +24,9 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
     }
 
     open func foundPeersForTest() -> [MCPeerID]{
-        return self.foundPeers.values
+        var peers = [MCPeerID]()
+        peers += self.foundPeers.values
+        return peers
     }
 
     open func name() -> String {
@@ -236,7 +238,7 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
     //MARK: str
     func foundPeersStr() -> String {
         var foundPeers = "FoundPeers: "
-        for (index, peer) in self.foundPeers.enumerated() {
+        for (index, peer) in self.foundPeers.values.enumerated() {
             foundPeers += peer.displayName
             if index != self.foundPeers.count - 1 {
                 foundPeers += ", "

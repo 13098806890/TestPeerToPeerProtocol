@@ -23,6 +23,8 @@
 		DA5C49BA20D9EF3700B74639 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5C49B820D9EF3700B74639 /* Main.storyboard */; };
 		DA5C49BC20D9EF3800B74639 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA5C49BB20D9EF3800B74639 /* Assets.xcassets */; };
 		DA5C49BF20D9EF3800B74639 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5C49BD20D9EF3800B74639 /* LaunchScreen.storyboard */; };
+		DAB4F21520F73E5A00FCB91C /* GNLParentSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB4F21420F73E5A00FCB91C /* GNLParentSession.swift */; };
+		DAB4F21720F73F3200FCB91C /* GNLClusterSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB4F21620F73F3200FCB91C /* GNLClusterSession.swift */; };
 		DACE0D5520E492B300AB97B2 /* PeerToPeerNetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE0D5420E492B300AB97B2 /* PeerToPeerNetworkProtocol.swift */; };
 		DACE0D5720E4BA8400AB97B2 /* GrandNetworkLayerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE0D5620E4BA8400AB97B2 /* GrandNetworkLayerNode.swift */; };
 		DACE0D5920E4C17D00AB97B2 /* NFCNetworkNodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE0D5820E4C17D00AB97B2 /* NFCNetworkNodeProtocol.swift */; };
@@ -48,6 +50,8 @@
 		DA5C49BB20D9EF3800B74639 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA5C49BE20D9EF3800B74639 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA5C49C020D9EF3800B74639 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAB4F21420F73E5A00FCB91C /* GNLParentSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNLParentSession.swift; sourceTree = "<group>"; };
+		DAB4F21620F73F3200FCB91C /* GNLClusterSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNLClusterSession.swift; sourceTree = "<group>"; };
 		DACE0D5420E492B300AB97B2 /* PeerToPeerNetworkProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerToPeerNetworkProtocol.swift; sourceTree = "<group>"; };
 		DACE0D5620E4BA8400AB97B2 /* GrandNetworkLayerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrandNetworkLayerNode.swift; sourceTree = "<group>"; };
 		DACE0D5820E4C17D00AB97B2 /* NFCNetworkNodeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCNetworkNodeProtocol.swift; sourceTree = "<group>"; };
@@ -67,8 +71,10 @@
 		651916A420E7BA3900F3B033 /* GrandNetworkLayer */ = {
 			isa = PBXGroup;
 			children = (
-				DACE0D5420E492B300AB97B2 /* PeerToPeerNetworkProtocol.swift */,
+				DAB4F21420F73E5A00FCB91C /* GNLParentSession.swift */,
+				DAB4F21620F73F3200FCB91C /* GNLClusterSession.swift */,
 				DACE0D5620E4BA8400AB97B2 /* GrandNetworkLayerNode.swift */,
+				DACE0D5420E492B300AB97B2 /* PeerToPeerNetworkProtocol.swift */,
 				6519169E20E787B000F3B033 /* GNLDataStructure.swift */,
 				651916A020E7926600F3B033 /* GNLDomainUsersInfo.swift */,
 				651916A220E7979400F3B033 /* GNLNetworkInfo.swift */,
@@ -209,10 +215,12 @@
 				DA5504EE20F361490029262C /* NuclearPlayground.swift in Sources */,
 				651916A120E7926600F3B033 /* GNLDomainUsersInfo.swift in Sources */,
 				6519169F20E787B000F3B033 /* GNLDataStructure.swift in Sources */,
+				DAB4F21520F73E5A00FCB91C /* GNLParentSession.swift in Sources */,
 				DACE0D5920E4C17D00AB97B2 /* NFCNetworkNodeProtocol.swift in Sources */,
 				DA5C49B320D9EF3700B74639 /* AppDelegate.swift in Sources */,
 				DACE0D5520E492B300AB97B2 /* PeerToPeerNetworkProtocol.swift in Sources */,
 				651916AC20F1166900F3B033 /* NuclearTestTableVieCellDetailViewController.swift in Sources */,
+				DAB4F21720F73F3200FCB91C /* GNLClusterSession.swift in Sources */,
 				DA5504EC20F35FA00029262C /* MultipeerNetWorkNode.swift in Sources */,
 				DA34298B20DA416B00B16EFB /* GrandNetworkDataParser.swift in Sources */,
 				DA5C49B520D9EF3700B74639 /* HomeViewController.swift in Sources */,

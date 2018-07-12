@@ -35,9 +35,9 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, Notificatio
     
     func reloadView() {
         DispatchQueue.main.async {
-            self.nameLabel.text = self.GNL.node.name()
-            self.foundPeersLabel.text = self.GNL.node.foundPeersStr()
-            self.connectedPeersLabel.text = self.GNL.node.connectedPeersStr()
+            self.nameLabel.text = self.GNL.displayName
+            self.foundPeersLabel.text = self.GNL.parent.foundPeersStr()
+            self.connectedPeersLabel.text = self.GNL.parent.connectedPeersStr()
         }
     }
 
@@ -51,8 +51,8 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, Notificatio
     }
     
     @IBAction func connect(_ sender: Any) {
-        if connectNodeTextField.text?.uppercased() != GNL.node.name() && connectNodeTextField.text != "" {
-            GNL.node.invite(node: connectNodeTextField.text!.uppercased(), withContext: nil, timeout: 1000)
+        if connectNodeTextField.text?.uppercased() != GNL.parent.name() && connectNodeTextField.text != "" {
+            GNL.parent.invite(node: connectNodeTextField.text!.uppercased(), withContext: nil, timeout: 1000)
             self.connectNodeTextField.text = ""
             self.reloadView()
         }
@@ -67,7 +67,7 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, Notificatio
 
     @IBAction func sendData(_ sender: Any) {
         if sendDataNodeTextField.text != "" {
-            GNL.node.sendTestData(to: sendDataNodeTextField.text!.uppercased())
+            GNL.parent.sendTestData(to: sendDataNodeTextField.text!.uppercased())
         }
     }
 

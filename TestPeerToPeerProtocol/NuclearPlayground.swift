@@ -15,7 +15,6 @@ protocol NotificationForTest {
 
 class NuclearPlayground: NotificationForTest {
     static let labs = NuclearPlayground()
-    static let serviceType = "PlayGround"
     var allNodesName: [String] = [String]()
     var allNodes: [String: MultipeerNetWorkNode] = [String: MultipeerNetWorkNode]()
     var allGNLNode: [GrandNetworkLayerNode] = [GrandNetworkLayerNode]()
@@ -30,18 +29,15 @@ class NuclearPlayground: NotificationForTest {
         if allNodesName.contains(name) {
             return false
         } else {
-            let node = MultipeerNetWorkNode.init(name)
+            self.allNodesName.append(name)
+            let GNLNode = GrandNetworkLayerNode.init(name: name)
             if blinds.count > 0 {
-                node.addBlinds(blinds)
+                GNLNode.parent.addBlinds(blinds)
             }
             if finders.count > 0 {
-                node.addFinders(finders)
+                GNLNode.parent.addFinders(finders)
             }
-            node.createBrowser(NuclearPlayground.serviceType)
-            node.createAdvertiser(NuclearPlayground.serviceType)
-            self.allNodesName.append(name)
-            self.allNodes[name] = node
-            let GNLNode = GrandNetworkLayerNode.init(node: node)
+            self.allNodes[name] = GNLNode.parent
             self.allGNLNode.append(GNLNode)
         }
 

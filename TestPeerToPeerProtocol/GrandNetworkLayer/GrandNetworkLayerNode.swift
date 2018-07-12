@@ -7,38 +7,46 @@
 //
 
 import Foundation
+import MultipeerConnectivity
 
-class GrandNetworkLayerNode: MultipeerTransportLayerDelegate {
+class GrandNetworkLayerNode: GNLParentSessionDelegate {
 
     //MARK: Properties
     var isMainNode: Bool = true
     var displayName: String
+    var serviceType: String
     var domain: GNLDomain
     var address: GNLAddress
-    var cluster: MultipeerNetWorkNode
-    var parent: MultipeerNetWorkNode
     var fullAddress: GNLFullAddress
     var children: [GNLAddress: MultipeerNetWorkNode] = [GNLAddress: MultipeerNetWorkNode]()
     var networkInfo: GNLNetworkInfo = GNLNetworkInfo()
+
+    lazy var cluster: GNLClusterSession = GNLClusterSession.init(displayName, serviceType: serviceType)
+    lazy var parent: GNLParentSession = GNLParentSession.init(displayName, serviceType: serviceType, delegate: self)
+
     var closePeers: [String]?
+    var _usersInNetwork: [String] = [String]()
 
-    init(displayName: String) {
-        self.address = 0
-        self.domain = displayName
-        self.displayName = displayName
-        self.parent = MultipeerNetWorkNode.init(displayName)
-
-
-    }
-
-    init(node: MultipeerNetWorkNode) {
-        self.node = node
-        domain = node.name()
+    init(name: String, service: String = "GNL-test") {
         address = 0
+        domain = name
+        displayName = name
+        serviceType = service
         fullAddress = GNLFullAddress(domain: domain, address: address)
-        node.delegate = self
+        _usersInNetwork.append(displayName)
+        start()
     }
-    
+
+    func start() {
+        self.parent.start()
+        self.cluster.start()
+    }
+
+    func stop() {
+        self.parent.stop()
+        self.cluster.stop()
+    }
+
     private func childStartAddress() -> GNLAddress {
         return address * childrenSize() + 1
     }
@@ -47,10 +55,22 @@ class GrandNetworkLayerNode: MultipeerTransportLayerDelegate {
         return networkInfo.leafSize + networkInfo.reservedSize
     }
 
-    //MARK: MultipeerTransportLayerDelegate
+    //MARK: GNLParentSessionDelegate
+    func GNLNodeName(_ peersDisplayName: String) -> String {
+        if peersDisplayName.hasSuffix("-c") {
+
+            return String(peersDisplayName.prefix(peersDisplayName.count-2))
+        }
+
+        return peersDisplayName
+    }
+
+    func usersInNetwork() -> [String] {
+        return _usersInNetwork
+    }
 
     func browser(foundPeer peerID: String, withDiscoveryInfo info: [String : String]?) {
-        
+
     }
     
     //MARK: GrandNetworkLayer

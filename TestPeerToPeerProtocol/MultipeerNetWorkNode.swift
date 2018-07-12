@@ -8,10 +8,6 @@
 
 import MultipeerConnectivity
 
-protocol MultipeerTransportLayerDelegate {
-    func browser(foundPeer peerID: String, withDiscoveryInfo info: [String : String]?) -> Void
-}
-
 class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
 
     //MARK: just for playground test
@@ -27,8 +23,8 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
         self.finderPeers += finders
     }
 
-    open func foundPeersForTest() -> [MCPeerID] {
-        return self.foundPeers
+    open func foundPeersForTest() -> [MCPeerID]{
+        return self.foundPeers.values
     }
 
     open func name() -> String {
@@ -88,23 +84,19 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
 
     //MARK: real node
 
-    fileprivate var session: MCSession!
+    var session: MCSession!
 
-    fileprivate var peer: MCPeerID!
+    var peer: MCPeerID!
 
-    fileprivate var browser: MCNearbyServiceBrowser?
+    var browser: MCNearbyServiceBrowser?
 
-    fileprivate var advertiser: MCNearbyServiceAdvertiser?
+    var advertiser: MCNearbyServiceAdvertiser?
 
-    fileprivate var foundPeers = [MCPeerID]()
+    var foundPeers: [String: MCPeerID] = [String: MCPeerID]()
 
-    internal var invitationHandler: ((Bool) -> Void)!
+    var invitationHandler: ((Bool) -> Void)!
 
-    open var delegate: MultipeerTransportLayerDelegate?
-
-    var isMaster: Bool = false
-
-    init(_ name: String = UIDevice.current.name) {
+    init(_ name: String) {
         super.init()
         peer = MCPeerID(displayName: name)
         session = MCSession(peer: peer)
@@ -112,10 +104,9 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
     }
 
     func createBrowser(_ serviceType: String) {
-        foundPeers = [MCPeerID]()
+        foundPeers = [String: MCPeerID]()
         browser = MCNearbyServiceBrowser(peer: peer, serviceType: serviceType)
         browser?.delegate = self
-        startBrowser()
     }
 
     fileprivate func startBrowser() {
@@ -129,7 +120,6 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
     func createAdvertiser(_ serviceType: String) {
         advertiser = MCNearbyServiceAdvertiser(peer: peer, discoveryInfo: self.discoveryInfoForTest(), serviceType: serviceType)
         advertiser?.delegate = self
-        startAdvertiser()
     }
 
     fileprivate func startAdvertiser() {
@@ -140,6 +130,16 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
         advertiser?.stopAdvertisingPeer()
     }
 
+    func start() {
+        self.startBrowser()
+        self.startAdvertiser()
+    }
+
+    func stop() {
+        self.stopBrowser()
+        self.stopAdvertiser()
+    }
+
     //MARK : - MCNearbyServiceBrowserDelegate
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         //Normal
@@ -148,7 +148,7 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
             return
         }
         //For Test
-        if info != nil {
+        /*if info != nil {
             let peerBlinds = info!["blinds"]?.components(separatedBy: CharacterSet.init(charactersIn: ","))
             let peerFinders = info!["finders"]?.components(separatedBy: CharacterSet.init(charactersIn: ","))
             if playGround.shouldFound(peerID: peerID.displayName, blinds: blindsPeers, finders: finderPeers) && playGround.shouldFound(peerID: self.peer.displayName, blinds:peerBlinds , finders: peerFinders) {
@@ -160,19 +160,19 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
                 self.foundPeers.append(peerID)
                 playGround.foundPeer(node: self, peerID: peerID.displayName, withDiscoveryInfo: info)
             }
-        }
+        }*/
 
 
     }
 
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
-        for (index, aPeer) in foundPeers.enumerated() {
+        /*for (index, aPeer) in foundPeers.enumerated() {
             if aPeer == peerID {
                 foundPeers.remove(at: index)
                 playGround.foundPeer(node: self, peerID: peerID.displayName, withDiscoveryInfo: nil)
                 break
             }
-        }
+        }*/
     }
 
     func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {
@@ -180,12 +180,12 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
     }
 
     func invite(node: String, withContext: Data?, timeout: TimeInterval) {
-        for peer in foundPeers {
+        /*for peer in foundPeers {
             if node == peer.displayName {
                 self.browser?.invitePeer(peer, to: session, withContext: withContext, timeout: timeout)
                 break
             }
-        }
+        }*/
     }
 
     //MARK : MCNearbyServiceAdvertiserDelegate
@@ -205,12 +205,12 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
     internal func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         switch state {
         case MCSessionState.connected:
-            for (index, aPeer) in foundPeers.enumerated() {
+            /*for (index, aPeer) in foundPeers.enumerated() {
                 if aPeer == peerID {
                     foundPeers.remove(at: index)
                     break
                 }
-            }
+            }*/
             playGround.connected(node: self, with: peerID.displayName)
             print("Connected to session: \(session)")
 

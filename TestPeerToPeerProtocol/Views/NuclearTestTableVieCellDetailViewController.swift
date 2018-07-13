@@ -8,18 +8,18 @@
 
 import UIKit
 
-class NuclearTestTableVieCellDetailViewController: UIViewController, NotificationForTest {
+class NuclearTestTableVieCellDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationForTest, NuclearTestFoundPeerTableViewCellDelegate {
 
+
+
+    @IBOutlet weak var foundPeersTableView: UITableView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var connectNodeTextField: UITextField!
-    @IBOutlet weak var disConnectedNodeTextField: UITextField!
-    @IBOutlet weak var sendDataNodeTextField: UITextField!
-    @IBOutlet weak var foundPeersLabel: UILabel!
-    @IBOutlet weak var connectedPeersLabel: UILabel!
-    var GNL: GrandNetworkLayerNode
+    @IBOutlet weak var connectedUsersTableView: UITableView!
+
+    var node: GrandNetworkLayerNode
     
     init(node: GrandNetworkLayerNode) {
-        self.GNL = node
+        self.node = node
         super.init(nibName: "NuclearTestTableVieCellDetailViewController", bundle: nil)
     }
     
@@ -29,15 +29,13 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, Notificatio
     
     override func viewDidLoad() {
         NuclearPlayground.labs.oberservers.append(self)
+        foundPeersTableView.register(UINib.init(nibName: "NuclearTestFoundPeerTableViewCell", bundle: nil), forCellReuseIdentifier: "NuclearTestFoundPeerTableViewCell")
         super.viewDidLoad()
         self.reloadView()
     }
     
     func reloadView() {
         DispatchQueue.main.async {
-            self.nameLabel.text = self.GNL.displayName
-            self.foundPeersLabel.text = self.GNL.parent.foundPeersStr()
-            self.connectedPeersLabel.text = self.GNL.parent.connectedPeersStr()
         }
     }
 
@@ -49,26 +47,36 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, Notificatio
     @IBAction func close(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    @IBAction func connect(_ sender: Any) {
-//        if connectNodeTextField.text?.uppercased() != GNL.parent.name() && connectNodeTextField.text != "" {
-//            GNL.parent.invite(node: connectNodeTextField.text!.uppercased(), withContext: nil, timeout: 1000)
-//            self.connectNodeTextField.text = ""
-//            self.reloadView()
-//        }
-    }
-    
-    @IBAction func disConnect(_ sender: Any) {
-        if disConnectedNodeTextField.text != "" {
-            self.disConnectedNodeTextField.text = ""
-            self.reloadView()
+
+    //MARK: tableView methods
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == foundPeersTableView {
+            return node.foundPeers.count
+        } else {
+            return 0
         }
     }
 
-    @IBAction func sendData(_ sender: Any) {
-        if sendDataNodeTextField.text != "" {
-            GNL.parent.sendTestData(to: sendDataNodeTextField.text!.uppercased())
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tableView == foundPeersTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NuclearTestFoundPeerTableViewCell") as! NuclearTestFoundPeerTableViewCell
+            cell.nameLabel.text = node.foundPeers[indexPath.row]
+            cell.delegate = self
+
+            return cell
         }
+
+        return UITableViewCell.init()
+    }
+
+    //MARK: NuclearTestFoundPeerTableViewCellDelegate
+
+    func closeConnectTo(_ name: String) {
+        self.node.inviteToCluster(name: name)
+    }
+
+    func connectTo(_ name: String) {
+
     }
 
     //MARK: NotificationForTest

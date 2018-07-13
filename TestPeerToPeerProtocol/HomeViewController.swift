@@ -77,7 +77,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.nameLabel.text = node.displayName
         cell.parentLabel.text = "Parent: nil"
         cell.foundPeersLabel.text = node.foundPeersStr()
-        cell.childrenLabel.text = "node.connectedPeersStr()"
+        cell.childrenLabel.text = node.connectedPeersStr()
 
         return cell
     }

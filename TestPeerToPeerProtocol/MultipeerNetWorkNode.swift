@@ -177,13 +177,8 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
         print(error.localizedDescription)
     }
 
-    func invite(node: String, withContext: Data?, timeout: TimeInterval) {
-        /*for peer in foundPeers {
-            if node == peer.displayName {
-                self.browser?.invitePeer(peer, to: session, withContext: withContext, timeout: timeout)
-                break
-            }
-        }*/
+    func invite(peer: MCPeerID, withContext: Data?, timeout: TimeInterval) {
+        self.browser?.invitePeer(peer, to: session, withContext: withContext, timeout: timeout)
     }
 
     //MARK : MCNearbyServiceAdvertiserDelegate
@@ -203,13 +198,6 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
     internal func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         switch state {
         case MCSessionState.connected:
-            /*for (index, aPeer) in foundPeers.enumerated() {
-                if aPeer == peerID {
-                    foundPeers.remove(at: index)
-                    break
-                }
-            }*/
-            playGround.connected(node: self, with: peerID.displayName)
             print("Connected to session: \(session)")
 
         case MCSessionState.connecting:

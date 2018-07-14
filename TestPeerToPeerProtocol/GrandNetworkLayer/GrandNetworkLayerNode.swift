@@ -20,6 +20,7 @@ class GrandNetworkLayerNode: GNLParentSessionDelegate, GNLClusterSessionDelegate
     var fullAddress: GNLFullAddress
     var children: [GNLAddress: MultipeerNetWorkNode] = [GNLAddress: MultipeerNetWorkNode]()
     var networkInfo: GNLNetworkInfo = GNLNetworkInfo()
+    var foundPeersInfo: [String: [String: String]] = [String: [String: String]]()
     var foundPeers: [String] = [String]()
     var _usersInNetwork: [String] = [String]()
     var clusterFoundPeers:[String: [String]] = [String: [String]]()
@@ -36,7 +37,6 @@ class GrandNetworkLayerNode: GNLParentSessionDelegate, GNLClusterSessionDelegate
         serviceType = service
         fullAddress = GNLFullAddress(domain: domain, address: address)
         _usersInNetwork.append(displayName)
-        start()
     }
 
     func start() {
@@ -49,13 +49,13 @@ class GrandNetworkLayerNode: GNLParentSessionDelegate, GNLClusterSessionDelegate
         self.cluster.stop()
     }
 
-    func isAbleToBuildClusterConnection(_ name: String) -> Bool {
+    func ableToBuildClusterConnection(_ name: String) -> Bool {
         for foundPeers in clusterFoundPeers.values {
             if !foundPeers.contains(name) {
                 return false
             }
         }
-
+        
         return true
     }
 
@@ -78,6 +78,10 @@ class GrandNetworkLayerNode: GNLParentSessionDelegate, GNLClusterSessionDelegate
        return GNLClusterSession.normalName(peersDisplayName)
     }
     
+    func usersBeFound() -> [String] {
+        return foundPeers
+    }
+    
     func usersInNetwork() -> [String] {
         return _usersInNetwork
     }
@@ -88,24 +92,54 @@ class GrandNetworkLayerNode: GNLParentSessionDelegate, GNLClusterSessionDelegate
         })
     }
     
-    func usersBeFound() -> [String] {
-        return foundPeers
-    }
-
     //MARK: GNLParentSessionDelegate
     func parentBrowser(foundPeer peerID: String, withDiscoveryInfo info: [String : String]?) {
         foundPeers.append(peerID)
+        if info == nil {
+            foundPeersInfo[peerID] = [String: String]()
+        } else {
+            foundPeersInfo[peerID] = info
+        }
+        sendClusterFoundPeers()
+        sendClusterFoundPeersInfo()
     }
     
     func parentBrowser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: String) {
         if let index = foundPeers.index(of: peerID) {
             foundPeers.remove(at: index)
         }
-
+        foundPeersInfo.removeValue(forKey: peerID)
+    }
+    
+    func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        let transportData = GrandNetworkDataParser.parse(data)
+        let networkData = transportData.data
+        switch networkData.dataType {
+        case .SendClusterFoundPeersInfo:
+            if let foundPeersData = networkData.data {
+                let foundPeersInfo = GrandNetworkDataParser.parseClusterFoundPeersInfo(foundPeersData)
+                var foundPeers = [String]()
+                for key in foundPeersInfo.keys {
+                    foundPeers.append(key)
+                }
+                clusterFoundPeers[GNLNodeName(peerID.displayName)] = foundPeers
+            }
+            NuclearPlayground.labs.reloadView()
+        case .SendClusterFoundPeers:
+            if let foundPeersData = networkData.data {
+                let foundPeers = GrandNetworkDataParser.parseClusterFoundPeers(foundPeersData)
+                self.foundPeers += foundPeers
+                clusterFoundPeers[GNLNodeName(peerID.displayName)] = foundPeers
+            }
+            NuclearPlayground.labs.reloadView()
+        default: break
+            
+        }
     }
 
     func connectedWithPeer(_ peer: String) {
         _usersInNetwork.append(peer)
+        foundPeersInfo.removeValue(forKey: peer)
         foundPeers = foundPeers.filter({ (name) -> Bool in
             return name != peer
         })
@@ -113,7 +147,7 @@ class GrandNetworkLayerNode: GNLParentSessionDelegate, GNLClusterSessionDelegate
         // send to all other Nodes
     }
 
-    //MARK: GNLClusterSessionDelegate
+    //MARK: GNLClusterSessionDelegate and methods
     func clusterSession(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         let nodeName = GNLNodeName(peerID.displayName)
         switch state {
@@ -121,6 +155,7 @@ class GrandNetworkLayerNode: GNLParentSessionDelegate, GNLClusterSessionDelegate
             print("Connected to session: \(session)")
             connectedWithPeer(nodeName)
             deleteClusterFoundPeer(nodeName)
+            sendClusterFoundPeersInfo()
             sendClusterFoundPeers()
             NuclearPlayground.labs.connected(node: cluster, with: nodeName)
         case MCSessionState.connecting:
@@ -129,7 +164,20 @@ class GrandNetworkLayerNode: GNLParentSessionDelegate, GNLClusterSessionDelegate
             print("Lost connection to session: \(session)")
         }
     }
+    
+    func clusterSession(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        self.session(session, didReceive: data, fromPeer: peerID)
+    }
 
+    func sendClusterFoundPeersInfo() {
+        let transportData = GrandNetworkDataParser.sendClusterFoundPeersInfo(foundPeersInfo)
+        do {
+            try cluster.session.send(transportData, toPeers: cluster.session.connectedPeers, with: .reliable)
+        } catch {
+            print(error)
+        }
+    }
+    
     func sendClusterFoundPeers() {
         let transportData = GrandNetworkDataParser.sendClusterFoundPeers(foundPeers)
         do {
@@ -146,21 +194,22 @@ class GrandNetworkLayerNode: GNLParentSessionDelegate, GNLClusterSessionDelegate
             })
         }
     }
+    
 
     //MARK: GrandNetworkLayer
 
 
     //MARK: Str
     func foundPeersStr() -> String {
-        var foundPeers = "FoundPeers: "
-        for (index, peer) in self.foundPeers.enumerated() {
-            foundPeers += peer
-            if index != self.foundPeers.count - 1 {
-                foundPeers += ", "
+        var foundPeersStr = "FoundPeers: "
+        for (index, peer) in foundPeers.enumerated() {
+            foundPeersStr += peer
+            if index != foundPeers.count - 1 {
+                foundPeersStr += ", "
             }
         }
         
-        return foundPeers
+        return foundPeersStr
     }
 
     func connectedPeersStr() -> String {

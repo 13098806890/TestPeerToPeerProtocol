@@ -11,6 +11,7 @@ import Foundation
 protocol NotificationForTest {
     func foundPeer(node: MultipeerNetWorkNode, peerID: String, withDiscoveryInfo info: [String : String]?) -> Void
     func connected(node: MultipeerNetWorkNode, with peer: String) -> Void
+    func reloadView() -> Void
 }
 
 class NuclearPlayground: NotificationForTest {
@@ -27,12 +28,14 @@ class NuclearPlayground: NotificationForTest {
             let GNLNode = GrandNetworkLayerNode.init(name: name)
             if blinds.count > 0 {
                 GNLNode.parent.addBlinds(blinds)
+                GNLNode.cluster.addBlinds(blinds)
             }
             if finders.count > 0 {
                 GNLNode.parent.addFinders(finders)
+                GNLNode.cluster.addFinders(finders)
             }
             self.allGNLNode.append(GNLNode)
-            
+            GNLNode.start()
         }
 
         return true
@@ -69,6 +72,12 @@ class NuclearPlayground: NotificationForTest {
     func connected(node: MultipeerNetWorkNode, with peer: String) {
         for oberserver in oberservers {
             oberserver.connected(node: node, with: peer)
+        }
+    }
+    
+    func reloadView() {
+        for oberserver in oberservers {
+            oberserver.reloadView()
         }
     }
 }

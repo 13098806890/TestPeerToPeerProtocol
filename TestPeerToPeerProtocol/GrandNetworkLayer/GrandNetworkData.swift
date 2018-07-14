@@ -10,8 +10,10 @@ import Foundation
 
 public enum GNLDataType: String {
 
-    case SendClusterFoundPeers
+    case SendClusterFoundPeersInfo
 
+    case SendClusterFoundPeers
+    
     case Instruction
 
     case Message

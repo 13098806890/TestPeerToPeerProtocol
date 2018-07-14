@@ -12,12 +12,12 @@ import MultipeerConnectivity
 protocol GNLSessionDelegate: AnyObject {
     func usersBeFound() -> [String]
     func usersInNetwork() -> [String]
+    func GNLNodeName(_ peersDisplayName: String) -> String
 }
 
 protocol GNLParentSessionDelegate: GNLSessionDelegate {
     func parentBrowser(foundPeer peerID: String, withDiscoveryInfo info: [String : String]?) -> Void
     func parentBrowser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: String) -> Void
-    func GNLNodeName(_ peersDisplayName: String) -> String
 }
 
 class GNLParentSession: MultipeerNetWorkNode {
@@ -25,9 +25,7 @@ class GNLParentSession: MultipeerNetWorkNode {
 
     init(_ name: String, serviceType: String, delegate: GNLParentSessionDelegate) {
         self.delegate = delegate
-        super.init(name)
-        createBrowser(serviceType)
-        createAdvertiser(serviceType)
+        super.init(name, serviceType:  serviceType)
     }
 
     func clusterPeerID(_ name: String) -> MCPeerID? {

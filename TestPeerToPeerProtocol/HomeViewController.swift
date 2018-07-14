@@ -30,7 +30,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.reloadData()
+        self.reloadView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,18 +52,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             finders += nodeFindersTextField.text!.uppercased().components(separatedBy: CharacterSet.init(charactersIn: ","))
         }
         if labs.addNode(name: name, blinds: blinds, finders: finders) {
-            reloadData()
+            reloadView()
             nodeNameTextField.text = ""
         }
         self.view.endEditing(true)
 
-    }
-    
-    func reloadData() {
-        allNodes = labs.allGNLNode
-        DispatchQueue.main.async {
-            self.nodesTableView.reloadData()
-        }
     }
     
     //MARK: UITableView delegate and datasource methods
@@ -94,11 +87,18 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     //MARK: NotificationForTest
     func foundPeer(node: MultipeerNetWorkNode, peerID: String, withDiscoveryInfo info: [String : String]?) {
-        reloadData()
+        reloadView()
     }
 
     func connected(node: MultipeerNetWorkNode, with peer: String) {
-        reloadData()
+        reloadView()
+    }
+    
+    func reloadView() {
+        allNodes = labs.allGNLNode
+        DispatchQueue.main.async {
+            self.nodesTableView.reloadData()
+        }
     }
 
 }

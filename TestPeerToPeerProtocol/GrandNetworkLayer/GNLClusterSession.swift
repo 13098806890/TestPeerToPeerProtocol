@@ -11,6 +11,7 @@ import MultipeerConnectivity
 
 protocol GNLClusterSessionDelegate: AnyObject {
     func clusterSession(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) -> Void
+    func clusterSession(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID)
 }
 
 class GNLClusterSession: MultipeerNetWorkNode {
@@ -33,9 +34,7 @@ class GNLClusterSession: MultipeerNetWorkNode {
 
     init(_ name: String, serviceType: String, delegate: GNLClusterSessionDelegate) {
         self.delegate = delegate
-        super.init(GNLClusterSession.clusterName(name))
-        createAdvertiser(serviceType)
-        createBrowser(serviceType)
+        super.init(GNLClusterSession.clusterName(name), serviceType: serviceType)
     }
 
 
@@ -45,17 +44,7 @@ class GNLClusterSession: MultipeerNetWorkNode {
     }
 
     override func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        let transportData = GrandNetworkDataParser.parse(data)
-        let networkData = transportData.data
-        switch networkData.dataType {
-        case .SendClusterFoundPeers:
-            if let foundPeersData = networkData.data {
-                let foundPeers = GrandNetworkDataParser.parseClusterFoundPeers(foundPeersData)
-            }
-
-        default: break
-
-        }
+        delegate.clusterSession(session, didReceive: data, fromPeer: peerID)
     }
 
 }

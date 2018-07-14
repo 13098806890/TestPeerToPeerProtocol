@@ -17,10 +17,14 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
     
     open func addBlinds(_ blinds: [String]) {
         self.blindsPeers += blinds
+        stopAdvertiser()
+        startAdvertiser()
     }
 
     open func addFinders(_ finders: [String]) {
         self.finderPeers += finders
+        stopAdvertiser()
+        startAdvertiser()
     }
 
     open func foundPeersForTest() -> [MCPeerID]{
@@ -93,39 +97,46 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
     var foundPeers: [String: MCPeerID] = [String: MCPeerID]()
 
     var invitationHandler: ((Bool) -> Void)!
+    
+    var serviceType: String
 
-    init(_ name: String) {
+    init(_ name: String, serviceType: String) {
+        self.serviceType = serviceType
         super.init()
         peer = MCPeerID(displayName: name)
         session = MCSession(peer: peer)
         session.delegate = self
     }
 
-    func createBrowser(_ serviceType: String) {
+    func createBrowser() {
         foundPeers = [String: MCPeerID]()
         browser = MCNearbyServiceBrowser(peer: peer, serviceType: serviceType)
         browser?.delegate = self
     }
 
     fileprivate func startBrowser() {
+        createBrowser()
         browser?.startBrowsingForPeers()
     }
 
     fileprivate func stopBrowser() {
         browser?.stopBrowsingForPeers()
+        browser = nil
     }
 
-    func createAdvertiser(_ serviceType: String) {
+    func createAdvertiser() {
         advertiser = MCNearbyServiceAdvertiser(peer: peer, discoveryInfo: self.discoveryInfoForTest(), serviceType: serviceType)
         advertiser?.delegate = self
     }
 
     fileprivate func startAdvertiser() {
+        createAdvertiser()
         advertiser?.startAdvertisingPeer()
     }
 
     fileprivate func stopAdvertiser() {
         advertiser?.stopAdvertisingPeer()
+        advertiser = nil
     }
 
     func start() {

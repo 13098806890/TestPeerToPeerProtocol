@@ -34,11 +34,6 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, UITableView
         self.reloadView()
     }
     
-    func reloadView() {
-        DispatchQueue.main.async {
-        }
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -51,22 +46,27 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, UITableView
     //MARK: tableView methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == foundPeersTableView {
-            return node.foundPeers.count
+            return node.foundPeers().count
         } else {
-            return 0
+            return node.connectedUsers().count
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == foundPeersTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NuclearTestFoundPeerTableViewCell") as! NuclearTestFoundPeerTableViewCell
-            cell.nameLabel.text = node.foundPeers[indexPath.row]
+            let foundPeer = node.foundPeers()[indexPath.row]
+            cell.closeConnectButton.isHidden = !node.ableToBuildClusterConnection(foundPeer)
+            cell.nameLabel.text = foundPeer
             cell.delegate = self
 
             return cell
+        } else {
+            let cell = UITableViewCell.init()
+            cell.textLabel?.text = node.connectedUsers()[indexPath.row]
+            
+            return cell
         }
-
-        return UITableViewCell.init()
     }
 
     //MARK: NuclearTestFoundPeerTableViewCellDelegate
@@ -86,6 +86,13 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, UITableView
 
     func connected(node: MultipeerNetWorkNode, with peer: String) {
         reloadView()
+    }
+    
+    func reloadView() {
+        DispatchQueue.main.async {
+            self.foundPeersTableView.reloadData()
+            self.connectedUsersTableView.reloadData()
+        }
     }
 
 }

@@ -46,7 +46,7 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, UITableView
     //MARK: tableView methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == foundPeersTableView {
-            return node.foundPeers().count
+            return node.foundPeers.count
         } else {
             return node.connectedUsers().count
         }
@@ -55,7 +55,7 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == foundPeersTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NuclearTestFoundPeerTableViewCell") as! NuclearTestFoundPeerTableViewCell
-            let foundPeer = node.foundPeers()[indexPath.row]
+            let foundPeer = node.foundPeers.sorted()[indexPath.row]
             cell.closeConnectButton.isHidden = !node.ableToBuildClusterConnection(foundPeer)
             cell.nameLabel.text = foundPeer
             cell.delegate = self
@@ -63,7 +63,7 @@ class NuclearTestTableVieCellDetailViewController: UIViewController, UITableView
             return cell
         } else {
             let cell = UITableViewCell.init()
-            cell.textLabel?.text = node.connectedUsers()[indexPath.row]
+            cell.textLabel?.text = node.connectedUsers().sorted()[indexPath.row]
             
             return cell
         }

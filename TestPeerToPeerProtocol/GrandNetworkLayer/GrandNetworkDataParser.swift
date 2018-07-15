@@ -30,15 +30,15 @@ class GrandNetworkDataParser {
         return NSKeyedUnarchiver.unarchiveObject(with: data) as! [String: [String: String]]
     }
     
-    static func sendClusterFoundPeers(_ info: [String]) -> Data {
+    static func sendClusterFoundPeers(_ info: Set<String>) -> Data {
         let data = NSKeyedArchiver.archivedData(withRootObject: info)
         let networkData = GrandNetworkData.init(data: data, type: GNLDataType.SendClusterFoundPeers)
         let transportData = GrandNetworkTransportData.init(data: networkData, sender: nil)
         return NSKeyedArchiver.archivedData(withRootObject: transportData)
     }
     
-    static func parseClusterFoundPeers(_ data: Data) -> [String] {
-        return NSKeyedUnarchiver.unarchiveObject(with: data) as! [String]
+    static func parseClusterFoundPeers(_ data: Data) -> Set<String> {
+        return NSKeyedUnarchiver.unarchiveObject(with: data) as! Set<String>
     }
 
 

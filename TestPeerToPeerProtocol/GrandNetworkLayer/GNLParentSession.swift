@@ -10,9 +10,10 @@ import UIKit
 import MultipeerConnectivity
 
 protocol GNLSessionDelegate: AnyObject {
-    func usersBeFound() -> [String]
-    func usersInNetwork() -> [String]
+    func usersBeFound() -> Set<String>
+    func usersInNetwork() -> Set<String>
     func GNLNodeName(_ peersDisplayName: String) -> String
+    func peersFoundByCluster() -> Set<String>
 }
 
 protocol GNLParentSessionDelegate: GNLSessionDelegate {

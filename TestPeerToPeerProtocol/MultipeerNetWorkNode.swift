@@ -61,7 +61,7 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
 
         return info
     }
-
+    
     func blindsStr() -> String {
         var blinds = ""
         for (index, peer) in blindsPeers.enumerated() {
@@ -124,9 +124,18 @@ class MultipeerNetWorkNode: NSObject, MCSessionDelegate, MCNearbyServiceBrowserD
         browser = nil
     }
 
+    func discoverInfo() -> [String: String]? {
+        return discoveryInfoForTest()
+    }
+    
     func createAdvertiser() {
-        advertiser = MCNearbyServiceAdvertiser(peer: peer, discoveryInfo: self.discoveryInfoForTest(), serviceType: serviceType)
+        advertiser = MCNearbyServiceAdvertiser(peer: peer, discoveryInfo: discoverInfo(), serviceType: serviceType)
         advertiser?.delegate = self
+    }
+    
+    func reAdvertiser() {
+        stopAdvertiser()
+        createAdvertiser()
     }
 
     fileprivate func startAdvertiser() {
